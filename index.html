@@ -200,4 +200,124 @@
             color: white;
             padding: 25px 10%;
             font-size: 0.75rem;
-            margin
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            border-bottom: 1px solid #718096;
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+
+        .footer-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-placeholder">❤️</div>
+        <div class="header-text">
+            <p>REPUBLIC OF ATTRACTION</p>
+            <h2>DEPARTMENT OF FOREIGN AFFAIRS & ATTACHMENTS</h2>
+            <p>143 ROXAS BOULEVARD, PASAY CITY, PHILIPPINES 1300</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <h3 class="page-title">Schedule an Appointment</h3>
+        
+        <div class="content-grid">
+            <aside>
+                <ul class="sidebar-menu">
+                    <li class="active"><a href="#">Appointment</a></li>
+                    <li><a href="#">View Appointment</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <p class="welcome-text">
+                    Welcome to the DFA Online Boyfriend Application System. Review all fields in the online form carefully and provide complete and accurate information.
+                </p>
+
+                <div class="reminder-box">
+                    <strong class="title">Reminder:</strong>
+                    Applicants are recommended to use active messaging accounts with fast reply times to avoid any technical incompatibilities. <strong>Unannounced ghosting or late replies may result in immediate forfeiture of application.</strong>
+                </div>
+
+                <div class="terms-section">
+                    <h4 class="terms-header">TERMS AND CONDITIONS</h4>
+                    <p class="terms-text">
+                        This appointment and scheduling system allocates slots on a first-come, first-served basis.
+                    </p>
+                    <p class="terms-text">
+                        Users accept the responsibility for supplying, checking, and verifying the accuracy and correctness of the information they provide on this system in connection with their application. Incorrect or inaccurate information supplied may result in instant disqualification.
+                    </p>
+                    <p class="terms-text">
+                        <strong>For Applicants utilizing the Premium Dating System:</strong> All emotional investments are non-refundable. Fees/Efforts shall be forfeited for applicants who fail to show up on their confirmed date, applicants who cancel unexpectedly, or applicants who present discrepant intention profiles.
+                    </p>
+
+                    <div class="consent-box">
+                        <input type="checkbox" id="consent">
+                        <label for="consent">
+                            By proceeding with this application, I understand that I am signifying my unequivocal consent to the disclosure, collection, and processing of my personal info, favorite foods, red/green flags, and date availability under the specific terms and conditions of the DFA Online Boyfriend Appointment System.
+                        </label>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn">👤 START INDIVIDUAL APPOINTMENT</button>
+                        <button class="btn">👥 START GROUP APPOINTMENT</button>
+                    </div>
+
+                    <p class="subtext-note">
+                        After agreeing to the Terms and Conditions above, you may start your application by clicking either option.
+                    </p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <strong>DEPARTMENT OF FOREIGN AFFAIRS & ATTACHMENTS</strong><br>
+                <strong>OFFICE OF CONSULAR & ROMANTIC AFFAIRS</strong><br>
+                <span style="color: #cbd5e0;">Aseana Business Park, Bradco Avenue, Diosdado Macapagal Blvd, Parañaque, 1714 Metro Manila</span>
+            </div>
+            <div>
+                <strong>SITEMAP</strong>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">Where to Apply</a>
+                    <a href="#">Requirements</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Schedule Appointment</a>
+                    <a href="#">Payment Merchants</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>Copyright © Department of Foreign Affairs | Office of Consular Affairs</span>
+            <span>1.2.2(2436269516.22) | Privacy Policy</span>
+        </div>
+    </footer>
+
+</body>
+</html>
