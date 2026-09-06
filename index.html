@@ -113,6 +113,11 @@
             font-weight: bold;
         }
 
+        .sidebar-menu li.completed a {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
         /* Step 1 Styles */
         .welcome-text {
             font-size: 0.85rem;
@@ -202,7 +207,7 @@
             margin-top: 15px;
         }
 
-        /* Form Controls for Step 2 */
+        /* Form Controls */
         .form-section-title {
             font-size: 0.85rem;
             color: #555;
@@ -244,10 +249,54 @@
             color: #666;
         }
 
-        .date-time-row {
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            padding-top: 5px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .summary-banner {
+            background-color: #ebf8ff;
+            border: 1px solid #bee3f8;
+            padding: 10px 15px;
+            font-size: 0.8rem;
+            color: #2b6cb0;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .warning-box {
+            border: 1px solid #feb2b2;
+            background-color: #fff5f5;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            color: #c53030;
+            line-height: 1.4;
         }
 
         .notice-footer-box {
@@ -518,7 +567,6 @@
                     <li class="active"><a href="#">📍 Site Location</a></li>
                     <li><a href="#">👤 Personal Information</a></li>
                     <li><a href="#">💖 Preferences & Flags</a></li>
-                    <li><a href="#">📞 Contact Information</a></li>
                 </ul>
             </aside>
 
@@ -545,7 +593,7 @@
                 </div>
 
                 <!-- Date & Time Inputs -->
-                <div class="date-time-row">
+                <div class="grid-2">
                     <div class="form-group">
                         <label for="dateInput">Date <span class="req">*</span></label>
                         <input type="date" id="dateInput" class="form-control">
@@ -594,8 +642,118 @@
                 </div>
 
                 <div class="nav-buttons">
-                    <button class="btn btn-secondary" id="backBtn">BACK</button>
-                    <button class="btn" id="nextBtn">NEXT</button>
+                    <button class="btn btn-secondary" id="backBtnStep2">BACK</button>
+                    <button class="btn" id="nextBtnStep2">NEXT</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- STEP 3: PERSONAL INFORMATION PAGE -->
+        <div id="step3View" class="content-grid hidden">
+            <aside>
+                <ul class="sidebar-menu">
+                    <li class="completed"><a href="#">✓ Site Location</a></li>
+                    <li class="active"><a href="#">👤 Personal Information</a></li>
+                    <li><a href="#">💖 Preferences & Flags</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <div class="summary-banner">
+                    <span><strong>Site:</strong> <span id="summarySite">--</span></span>
+                    <span><strong>Date:</strong> <span id="summaryDate">--</span> | <strong>Time:</strong> <span id="summaryTime">--</span></span>
+                </div>
+
+                <div class="warning-box">
+                    <strong>WARNING:</strong> Ensure that all details in the name (last name, given name) and personal details are accurate. Misrepresentations may result in instantaneous rejection or immediate ghosting.
+                </div>
+
+                <!-- Name Fields -->
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label for="lastName">Last Name <span class="req">*</span></label>
+                        <input type="text" id="lastName" class="form-control" placeholder="e.g. Santos">
+                    </div>
+                    <div class="form-group">
+                        <label for="givenName">Given Name <span class="req">*</span></label>
+                        <input type="text" id="givenName" class="form-control" placeholder="e.g. Maria Clara">
+                    </div>
+                    <div class="form-group">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" id="middleName" class="form-control" placeholder="e.g. Delos Reyes">
+                    </div>
+                </div>
+
+                <!-- Gender, Birthday & Civil Status -->
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>Gender <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="gender" value="Male"> Male</label>
+                            <label><input type="radio" name="gender" value="Female"> Female</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth <span class="req">*</span></label>
+                        <input type="date" id="dob" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="civilStatus">Civil Status <span class="req">*</span></label>
+                        <select id="civilStatus" class="form-control">
+                            <option value="">-- SELECT CIVIL STATUS --</option>
+                            <option value="Single">Single (Ready to mingle)</option>
+                            <option value="Its Complicated">It's Complicated</option>
+                            <option value="Moving On">Moving On</option>
+                            <option value="Talking Stage">Talking Stage Professional</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Added Personal Details (No contact info/sensitive details) -->
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="occupation">Occupation / Profession <span class="req">*</span></label>
+                        <input type="text" id="occupation" class="form-control" placeholder="e.g. Software Engineer, Student, Designer">
+                    </div>
+                    <div class="form-group">
+                        <label for="relationshipGoal">Primary Relationship Goal <span class="req">*</span></label>
+                        <select id="relationshipGoal" class="form-control">
+                            <option value="">-- SELECT GOAL --</option>
+                            <option value="Long-term">Long-term Relationship</option>
+                            <option value="Casual Dating">Casual Dating</option>
+                            <option value="Marriage Minded">Marriage Minded</option>
+                            <option value="Food Trip Buddy">Food Trip Buddy First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="loveLanguage">Primary Love Language <span class="req">*</span></label>
+                        <select id="loveLanguage" class="form-control">
+                            <option value="">-- SELECT LOVE LANGUAGE --</option>
+                            <option value="Quality Time">Quality Time</option>
+                            <option value="Words of Affirmation">Words of Affirmation</option>
+                            <option value="Physical Touch">Physical Touch</option>
+                            <option value="Acts of Service">Acts of Service</option>
+                            <option value="Receiving Gifts">Receiving Gifts</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height (approx.)</label>
+                        <select id="height" class="form-control">
+                            <option value="">-- SELECT HEIGHT --</option>
+                            <option value="Below 5'2">Below 5'2"</option>
+                            <option value="5'2 - 5'6">5'2" - 5'6"</option>
+                            <option value="5'7 - 5'11">5'7" - 5'11"</option>
+                            <option value="6'0+">6'0"+ (Tall King/Queen)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="backBtnStep3">BACK</button>
+                    <button class="btn" id="nextBtnStep3">NEXT</button>
                 </div>
             </main>
         </div>
@@ -668,32 +826,49 @@
 
         const step1View = document.getElementById('step1View');
         const step2View = document.getElementById('step2View');
+        const step3View = document.getElementById('step3View');
         const pageTitle = document.getElementById('pageTitle');
-        const backBtn = document.getElementById('backBtn');
-        const nextBtn = document.getElementById('nextBtn');
 
+        // Step 2 Inputs
         const siteInput = document.getElementById('siteInput');
         const dateInput = document.getElementById('dateInput');
         const timeInput = document.getElementById('timeInput');
         const confirmLocation = document.getElementById('confirmLocation');
         const captchaCheck = document.getElementById('captchaCheck');
+        const backBtnStep2 = document.getElementById('backBtnStep2');
+        const nextBtnStep2 = document.getElementById('nextBtnStep2');
 
+        // Step 3 Inputs
+        const lastName = document.getElementById('lastName');
+        const givenName = document.getElementById('givenName');
+        const dob = document.getElementById('dob');
+        const civilStatus = document.getElementById('civilStatus');
+        const occupation = document.getElementById('occupation');
+        const relationshipGoal = document.getElementById('relationshipGoal');
+        const loveLanguage = document.getElementById('loveLanguage');
+        const backBtnStep3 = document.getElementById('backBtnStep3');
+        const nextBtnStep3 = document.getElementById('nextBtnStep3');
+
+        // Summary labels on Step 3
+        const summarySite = document.getElementById('summarySite');
+        const summaryDate = document.getElementById('summaryDate');
+        const summaryTime = document.getElementById('summaryTime');
+
+        // Alert Modal
         const alertModal = document.getElementById('alertModal');
         const alertMessage = document.getElementById('alertMessage');
         const closeAlertModal = document.getElementById('closeAlertModal');
 
-        // Toggle Step 1 buttons based on agreement
+        // Step 1 Enable/Disable
         consentCheckbox.addEventListener('change', () => {
             const isChecked = consentCheckbox.checked;
             indivBtn.disabled = !isChecked;
             groupBtn.disabled = !isChecked;
         });
 
-        // Group Appointment Popup
+        // Group Modal Controls
         groupBtn.addEventListener('click', () => {
-            if (!groupBtn.disabled) {
-                groupModal.style.display = 'flex';
-            }
+            if (!groupBtn.disabled) groupModal.style.display = 'flex';
         });
 
         closeGroupModal.addEventListener('click', () => {
@@ -709,7 +884,7 @@
             if (e.target === alertModal) alertModal.style.display = 'none';
         });
 
-        // Navigation between pages
+        // Navigation: Step 1 -> Step 2
         indivBtn.addEventListener('click', () => {
             if (!indivBtn.disabled) {
                 step1View.classList.add('hidden');
@@ -718,14 +893,15 @@
             }
         });
 
-        backBtn.addEventListener('click', () => {
+        // Navigation: Step 2 Back
+        backBtnStep2.addEventListener('click', () => {
             step2View.classList.add('hidden');
             step1View.classList.remove('hidden');
             pageTitle.textContent = 'Schedule an Appointment';
         });
 
-        // Validation popup when Next is clicked
-        nextBtn.addEventListener('click', () => {
+        // Navigation: Step 2 Next -> Step 3
+        nextBtnStep2.addEventListener('click', () => {
             let errors = [];
 
             if (!siteInput.value.trim()) errors.push('Site / Romantic Venue');
@@ -738,7 +914,43 @@
                 alertMessage.innerHTML = `Please complete the following required items before proceeding:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
                 alertModal.style.display = 'flex';
             } else {
-                alert('Details validated successfully! Proceeding to Personal Information...');
+                // Populate summary header on Step 3
+                summarySite.textContent = siteInput.value;
+                summaryDate.textContent = dateInput.value;
+                summaryTime.textContent = timeInput.value;
+
+                step2View.classList.add('hidden');
+                step3View.classList.remove('hidden');
+                pageTitle.textContent = 'Individual Appointment - Personal Information';
+            }
+        });
+
+        // Navigation: Step 3 Back -> Step 2
+        backBtnStep3.addEventListener('click', () => {
+            step3View.classList.add('hidden');
+            step2View.classList.remove('hidden');
+            pageTitle.textContent = 'Individual Appointment - Site Location';
+        });
+
+        // Step 3 Next Validation
+        nextBtnStep3.addEventListener('click', () => {
+            const genderSelected = document.querySelector('input[name="gender"]:checked');
+            let errors = [];
+
+            if (!lastName.value.trim()) errors.push('Last Name');
+            if (!givenName.value.trim()) errors.push('Given Name');
+            if (!genderSelected) errors.push('Gender');
+            if (!dob.value) errors.push('Date of Birth');
+            if (!civilStatus.value) errors.push('Civil Status');
+            if (!occupation.value.trim()) errors.push('Occupation / Profession');
+            if (!relationshipGoal.value) errors.push('Primary Relationship Goal');
+            if (!loveLanguage.value) errors.push('Primary Love Language');
+
+            if (errors.length > 0) {
+                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
+                alertModal.style.display = 'flex';
+            } else {
+                alert('Personal Information validated! Proceeding to Preferences & Flags...');
             }
         });
     </script>
