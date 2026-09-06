@@ -194,6 +194,77 @@
             margin-top: 15px;
         }
 
+        /* Modal / Pop-up Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: white;
+            width: 90%;
+            max-width: 420px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid #ddd;
+        }
+
+        .modal-header {
+            background-color: #9f2b58;
+            color: white;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+            font-size: 0.85rem;
+            color: #333;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .modal-body strong {
+            color: #c53030;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .modal-footer {
+            padding: 10px 15px;
+            background: #f9f9f9;
+            text-align: right;
+            border-top: 1px solid #eee;
+        }
+
+        .modal-close-btn {
+            background-color: #9f2b58;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-close-btn:hover {
+            background-color: #7d2045;
+        }
+
         /* Footer - Dark Magenta/Plum */
         footer {
             background-color: #3b1122;
@@ -283,7 +354,7 @@
 
                     <div class="button-group">
                         <button class="btn">👤 START INDIVIDUAL APPOINTMENT</button>
-                        <button class="btn">👥 START GROUP APPOINTMENT</button>
+                        <button class="btn" id="groupBtn">👥 START GROUP APPOINTMENT</button>
                     </div>
 
                     <p class="subtext-note">
@@ -291,6 +362,23 @@
                     </p>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="groupModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span>SYSTEM ERROR: MULTI-APPLICATION RESTRICTION</span>
+            </div>
+            <div class="modal-body">
+                <p>The DFA Online Boyfriend Application System strictly enforces a <strong>STICK-TO-ONE POLICY</strong>.</p>
+                <br>
+                <p>Group applications, roster building, and reserve benching are strictly prohibited under Republic Act 143. Please process a single application only.</p>
+                <strong>Error Code: TWO_IS_A_CROWD</strong>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close-btn" id="closeModal">I UNDERSTAND</button>
+            </div>
         </div>
     </div>
 
@@ -318,6 +406,26 @@
             <span>1.4.3(2436269516.22) | Privacy Policy</span>
         </div>
     </footer>
+
+    <script>
+        const groupBtn = document.getElementById('groupBtn');
+        const groupModal = document.getElementById('groupModal');
+        const closeModal = document.getElementById('closeModal');
+
+        groupBtn.addEventListener('click', () => {
+            groupModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            groupModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === groupModal) {
+                groupModal.style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 </html>
