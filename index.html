@@ -268,18 +268,19 @@
 
         .radio-group {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
             padding-top: 5px;
+            flex-wrap: wrap;
         }
 
         .radio-group label {
             font-weight: normal;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .summary-banner {
@@ -570,6 +571,8 @@
                     <li class="active"><a href="#">📍 Site Location</a></li>
                     <li><a href="#">👤 Personal Information</a></li>
                     <li><a href="#">🧠 Emotional Intelligence</a></li>
+                    <li><a href="#">💬 Communication Test</a></li>
+                    <li><a href="#">🚩 Red Flag Disclosure</a></li>
                 </ul>
             </aside>
 
@@ -655,6 +658,8 @@
                     <li class="completed"><a href="#">✓ Site Location</a></li>
                     <li class="active"><a href="#">👤 Personal Information</a></li>
                     <li><a href="#">🧠 Emotional Intelligence</a></li>
+                    <li><a href="#">💬 Communication Test</a></li>
+                    <li><a href="#">🚩 Red Flag Disclosure</a></li>
                 </ul>
             </aside>
 
@@ -736,6 +741,42 @@
                     </div>
                 </div>
 
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="mbti">MBTI Personality Type <span class="req">*</span></label>
+                        <select id="mbti" class="form-control">
+                            <option value="">-- SELECT MBTI TYPE --</option>
+                            <option value="INTJ">INTJ - Architect</option>
+                            <option value="INTP">INTP - Logician</option>
+                            <option value="ENTJ">ENTJ - Commander</option>
+                            <option value="ENTP">ENTP - Debater</option>
+                            <option value="INFJ">INFJ - Advocate</option>
+                            <option value="INFP">INFP - Mediator</option>
+                            <option value="ENFJ">ENFJ - Protagonist</option>
+                            <option value="ENFP">ENFP - Campaigner</option>
+                            <option value="ISTJ">ISTJ - Logistician</option>
+                            <option value="ISFJ">ISFJ - Defender</option>
+                            <option value="ESTJ">ESTJ - Executive</option>
+                            <option value="ESFJ">ESFJ - Consul</option>
+                            <option value="ISTP">ISTP - Virtuoso</option>
+                            <option value="ISFP">ISFP - Adventurer</option>
+                            <option value="ESTP">ESTP - Entrepreneur</option>
+                            <option value="ESFP">ESFP - Entertainer</option>
+                            <option value="Unknown">Not sure / Still discovering</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pet Preference / Lover <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="petPreference" value="Dog Person"> 🐶 Dog Person</label>
+                            <label><input type="radio" name="petPreference" value="Cat Person"> 🐱 Cat Person</label>
+                            <label><input type="radio" name="petPreference" value="Both"> 🐾 Both</label>
+                            <label><input type="radio" name="petPreference" value="No Pets"> 🚫 No Pets</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid-3">
                     <div class="form-group">
                         <label for="relationshipGoal">Relationship Goal <span class="req">*</span></label>
@@ -783,6 +824,8 @@
                     <li class="completed"><a href="#">✓ Site Location</a></li>
                     <li class="completed"><a href="#">✓ Personal Information</a></li>
                     <li class="active"><a href="#">🧠 Emotional Intelligence</a></li>
+                    <li><a href="#">💬 Communication Test</a></li>
+                    <li><a href="#">🚩 Red Flag Disclosure</a></li>
                 </ul>
             </aside>
 
@@ -859,7 +902,209 @@
 
                 <div class="nav-buttons">
                     <button class="btn btn-secondary" id="backBtnStep4">BACK</button>
-                    <button class="btn" id="nextBtnStep4">SUBMIT APPLICATION</button>
+                    <button class="btn" id="nextBtnStep4">NEXT</button>
+                </div>
+            </main>
+        </div>
+
+        <div id="step5View" class="content-grid hidden">
+            <aside>
+                <ul class="sidebar-menu">
+                    <li class="completed"><a href="#">✓ Site Location</a></li>
+                    <li class="completed"><a href="#">✓ Personal Information</a></li>
+                    <li class="completed"><a href="#">✓ Emotional Intelligence</a></li>
+                    <li class="active"><a href="#">💬 Communication Test</a></li>
+                    <li><a href="#">🚩 Red Flag Disclosure</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <div class="summary-banner">
+                    <span><strong>Applicant:</strong> <span id="summaryName2">--</span></span>
+                    <span><strong>Date:</strong> <span id="summaryDate2">--</span></span>
+                </div>
+
+                <div class="warning-box">
+                    <strong>COMMUNICATION PROTOCOL VERIFICATION:</strong> Assesses response cadence, banter quality, and texting habits under Departmental Messaging Standards.
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="replySpeed">Average Text Reply Speed <span class="req">*</span></label>
+                        <select id="replySpeed" class="form-control">
+                            <option value="">-- SELECT RESPONSE TIME --</option>
+                            <option value="Instant">Instant (Phone attached to hand)</option>
+                            <option value="5-15 mins">5 - 15 minutes</option>
+                            <option value="1-2 hours">1 - 2 hours (Busy but consistent)</option>
+                            <option value="End of day">End of day batched replies</option>
+                            <option value="Telepathic">Telepathic / Replies in my head</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lateReplyProtocol">If you get busy, how do you handle late replies? <span class="req">*</span></label>
+                        <select id="lateReplyProtocol" class="form-control">
+                            <option value="">-- SELECT PROTOCOL --</option>
+                            <option value="Heads up in advance">Send a heads-up beforehand ("Entering meeting!")</option>
+                            <option value="Apologize with reason">Apologize and explain why when back</option>
+                            <option value="Resume naturally">Resume conversation naturally like nothing happened</option>
+                            <option value="Voice message update">Send a quick voice message update</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="voiceNoteStance">Stance on Voice Notes / Audio Messages <span class="req">*</span></label>
+                        <select id="voiceNoteStance" class="form-control">
+                            <option value="">-- SELECT STANCE --</option>
+                            <option value="Love them">Love them! (Mini podcast sender)</option>
+                            <option value="OK occasionally">Okay occasionally for long stories</option>
+                            <option value="Text only">Text only please (I prefer reading)</option>
+                            <option value="Calls instead">Prefer direct phone calls instead</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="humorStyle">Primary Humor / Banter Style <span class="req">*</span></label>
+                        <select id="humorStyle" class="form-control">
+                            <option value="">-- SELECT HUMOR STYLE --</option>
+                            <option value="Witty & Sarcastic">Witty & Sarcastic banter</option>
+                            <option value="Meme sharing">Meme & Reel sharing currency</option>
+                            <option value="Wholesome & Corny">Wholesome, cute & dad jokes</option>
+                            <option value="Dry & Deadpan">Dry & Deadpan humor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="goToMeme">What is your ultimate go-to comfort meme or GIF topic? <span class="req">*</span></label>
+                    <input type="text" id="goToMeme" class="form-control" placeholder="e.g. Cat playing piano, confused lady, viral TikTok audio">
+                </div>
+
+                <div class="form-group">
+                    <label for="lateNightTopic">At 2:00 AM, what random topic are you most likely to talk about? <span class="req">*</span></label>
+                    <input type="text" id="lateNightTopic" class="form-control" placeholder="e.g. Space theories, childhood memories, random food cravings">
+                </div>
+
+                <div class="form-group">
+                    <label for="idealFirstText">Draft your opening test text message after a good date: <span class="req">*</span></label>
+                    <textarea id="idealFirstText" class="form-control" placeholder="e.g. Got home safe! Thanks for tonight, that coffee place was amazing..."></textarea>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="backBtnStep5">BACK</button>
+                    <button class="btn" id="nextBtnStep5">NEXT</button>
+                </div>
+            </main>
+        </div>
+
+        <div id="step6View" class="content-grid hidden">
+            <aside>
+                <ul class="sidebar-menu">
+                    <li class="completed"><a href="#">✓ Site Location</a></li>
+                    <li class="completed"><a href="#">✓ Personal Information</a></li>
+                    <li class="completed"><a href="#">✓ Emotional Intelligence</a></li>
+                    <li class="completed"><a href="#">✓ Communication Test</a></li>
+                    <li class="active"><a href="#">🚩 Red Flag Disclosure</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <div class="summary-banner">
+                    <span><strong>Applicant:</strong> <span id="summaryName3">--</span></span>
+                    <span><strong>Clearance Level:</strong> Romantic Disclosure Audit</span>
+                </div>
+
+                <div class="warning-box">
+                    <strong>FULL DISCLOSURE REQUIRED:</strong> Under Department Regulation 143-B, all quirks, minor red flags, and dating tendencies must be declared. Concealing red flags may result in instant revocation of boyfriend candidacy.
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="exContact">Status on Exes & Past Chapters <span class="req">*</span></label>
+                        <select id="exContact" class="form-control">
+                            <option value="">-- SELECT DISCLOSURE --</option>
+                            <option value="Strictly Zero Contact">Strictly zero contact / Blocked / Moved on completely</option>
+                            <option value="Civil Friends">Civil / Friendly if we bump into each other</option>
+                            <option value="Same Friend Group">In the same group, but purely platonic</option>
+                            <option value="Still Friends">Still close friends (Requires extra clearance)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jealousyLevel">Self-Assessed Jealousy Meter <span class="req">*</span></label>
+                        <select id="jealousyLevel" class="form-control">
+                            <option value="">-- SELECT JEALOUSY LEVEL --</option>
+                            <option value="1 - Very Chill">Level 1: Unbothered King/Queen (Trust-first)</option>
+                            <option value="2 - Healthy Protection">Level 2: Healthy protective instincts</option>
+                            <option value="3 - Cute Jealousy">Level 3: Pouts cutely when attention wanders</option>
+                            <option value="4 - High Alert">Level 4: High security radar (FBI skills active)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="hangingOutSpontaneity">Plan Cancel / Flakiness Record <span class="req">*</span></label>
+                        <select id="flakinessRecord" class="form-control">
+                            <option value="">-- SELECT TENDENCY --</option>
+                            <option value="Punctual Always">100% Punctual & Always Shows Up</option>
+                            <option value="Occasionally Late">10-15 mins late due to traffic (Filipino time)</option>
+                            <option value="Homebody Struggle">Fights internal urge to stay home, but makes it</option>
+                            <option value="Spontaneous Only">Prefers last-minute spontaneous dates only</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="foodSharing">Food Sharing / Bite Stealing Policy <span class="req">*</span></label>
+                        <select id="foodSharing" class="form-control">
+                            <option value="">-- SELECT POLICY --</option>
+                            <option value="What is mine is yours">Generous (What's mine is yours! Take a bite!)</option>
+                            <option value="Ask first">Must ask politely before taking fries</option>
+                            <option value="Joey Doesn't Share">"JOEY DOESN'T SHARE FOOD!" (Order your own)</option>
+                            <option value="Feeds you first">Prefers feeding you before taking a bite</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="shoppingPatience">Patience During Shopping / Outfit Fitting <span class="req">*</span></label>
+                        <select id="shoppingPatience" class="form-control">
+                            <option value="">-- SELECT PATIENCE LEVEL --</option>
+                            <option value="Infinite">Infinite (Carries bags & offers hype feedback)</option>
+                            <option value="Moderate">Good for 1-2 hours then needs coffee break</option>
+                            <option value="Sits on bench">Waits patiently on bench on phone</option>
+                            <option value="Low stamina">Stamina runs out in 20 minutes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hangryMeter">Hangry (Hungry + Angry) Index <span class="req">*</span></label>
+                        <select id="hangryMeter" class="form-control">
+                            <option value="">-- SELECT HANGRY RATING --</option>
+                            <option value="Low">Low (Stays calm and patient when hungry)</option>
+                            <option value="Moderate">Moderate (Gets quiet, needs food ASAP)</option>
+                            <option value="High">High (Dangerous zone: feed within 15 minutes)</option>
+                            <option value="Critical">Critical (Immediate emergency milk tea required)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="guiltyPleasure">Confess one harmless guilty pleasure or weird habit: <span class="req">*</span></label>
+                    <input type="text" id="guiltyPleasure" class="form-control" placeholder="e.g. Laughing at my own jokes, buying iced coffee at 9 PM, overthinking texts">
+                </div>
+
+                <div class="consent-box" style="margin-top: 15px; margin-bottom: 10px;">
+                    <input type="checkbox" id="confirmRedFlags">
+                    <label for="confirmRedFlags">I hereby certify that all declared red flags and quirks are accurate to the best of my knowledge and self-awareness.</label>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="backBtnStep6">BACK</button>
+                    <button class="btn" id="nextBtnStep6">SUBMIT APPLICATION</button>
                 </div>
             </main>
         </div>
@@ -932,6 +1177,8 @@
         const step2View = document.getElementById('step2View');
         const step3View = document.getElementById('step3View');
         const step4View = document.getElementById('step4View');
+        const step5View = document.getElementById('step5View');
+        const step6View = document.getElementById('step6View');
         const pageTitle = document.getElementById('pageTitle');
 
         // Step 2 Inputs
@@ -951,6 +1198,7 @@
         const occupation = document.getElementById('occupation');
         const city = document.getElementById('city');
         const zodiac = document.getElementById('zodiac');
+        const mbti = document.getElementById('mbti');
         const relationshipGoal = document.getElementById('relationshipGoal');
         const loveLanguage = document.getElementById('loveLanguage');
         const backBtnStep3 = document.getElementById('backBtnStep3');
@@ -966,12 +1214,38 @@
         const backBtnStep4 = document.getElementById('backBtnStep4');
         const nextBtnStep4 = document.getElementById('nextBtnStep4');
 
+        // Step 5 Inputs
+        const replySpeed = document.getElementById('replySpeed');
+        const lateReplyProtocol = document.getElementById('lateReplyProtocol');
+        const voiceNoteStance = document.getElementById('voiceNoteStance');
+        const humorStyle = document.getElementById('humorStyle');
+        const goToMeme = document.getElementById('goToMeme');
+        const lateNightTopic = document.getElementById('lateNightTopic');
+        const idealFirstText = document.getElementById('idealFirstText');
+        const backBtnStep5 = document.getElementById('backBtnStep5');
+        const nextBtnStep5 = document.getElementById('nextBtnStep5');
+
+        // Step 6 Inputs
+        const exContact = document.getElementById('exContact');
+        const jealousyLevel = document.getElementById('jealousyLevel');
+        const flakinessRecord = document.getElementById('flakinessRecord');
+        const foodSharing = document.getElementById('foodSharing');
+        const shoppingPatience = document.getElementById('shoppingPatience');
+        const hangryMeter = document.getElementById('hangryMeter');
+        const guiltyPleasure = document.getElementById('guiltyPleasure');
+        const confirmRedFlags = document.getElementById('confirmRedFlags');
+        const backBtnStep6 = document.getElementById('backBtnStep6');
+        const nextBtnStep6 = document.getElementById('nextBtnStep6');
+
         // Summary Labels
         const summarySite = document.getElementById('summarySite');
         const summaryDate = document.getElementById('summaryDate');
         const summaryTime = document.getElementById('summaryTime');
         const summaryName = document.getElementById('summaryName');
         const summarySite2 = document.getElementById('summarySite2');
+        const summaryName2 = document.getElementById('summaryName2');
+        const summaryDate2 = document.getElementById('summaryDate2');
+        const summaryName3 = document.getElementById('summaryName3');
 
         // Alert Modal
         const alertModal = document.getElementById('alertModal');
@@ -1053,6 +1327,7 @@
         // Navigation: Step 3 Next -> Step 4
         nextBtnStep3.addEventListener('click', () => {
             const genderSelected = document.querySelector('input[name="gender"]:checked');
+            const petSelected = document.querySelector('input[name="petPreference"]:checked');
             let errors = [];
 
             if (!lastName.value.trim()) errors.push('Last Name');
@@ -1063,6 +1338,8 @@
             if (!occupation.value.trim()) errors.push('Occupation / Profession');
             if (!city.value.trim()) errors.push('Current Residence (City)');
             if (!zodiac.value) errors.push('Astrological / Zodiac Sign');
+            if (!mbti.value) errors.push('MBTI Personality Type');
+            if (!petSelected) errors.push('Pet Preference');
             if (!relationshipGoal.value) errors.push('Relationship Goal');
             if (!loveLanguage.value) errors.push('Love Language');
 
@@ -1086,7 +1363,7 @@
             pageTitle.textContent = 'Individual Appointment - Personal Information';
         });
 
-        // Step 4 Final Submission Validation
+        // Navigation: Step 4 Next -> Step 5
         nextBtnStep4.addEventListener('click', () => {
             let errors = [];
 
@@ -1101,7 +1378,71 @@
                 alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
                 alertModal.style.display = 'flex';
             } else {
-                alert('Application Submitted Successfully! Your appointment booking is under review by Consular Officers.');
+                summaryName2.textContent = `${givenName.value} ${lastName.value}`;
+                summaryDate2.textContent = dateInput.value;
+
+                step4View.classList.add('hidden');
+                step5View.classList.remove('hidden');
+                pageTitle.textContent = 'Individual Appointment - Communication Test';
+            }
+        });
+
+        // Navigation: Step 5 Back -> Step 4
+        backBtnStep5.addEventListener('click', () => {
+            step5View.classList.add('hidden');
+            step4View.classList.remove('hidden');
+            pageTitle.textContent = 'Individual Appointment - Emotional Intelligence';
+        });
+
+        // Navigation: Step 5 Next -> Step 6
+        nextBtnStep5.addEventListener('click', () => {
+            let errors = [];
+
+            if (!replySpeed.value) errors.push('Average Text Reply Speed');
+            if (!lateReplyProtocol.value) errors.push('Late Reply Protocol');
+            if (!voiceNoteStance.value) errors.push('Stance on Voice Notes');
+            if (!humorStyle.value) errors.push('Primary Humor / Banter Style');
+            if (!goToMeme.value.trim()) errors.push('Go-to Meme / GIF Topic');
+            if (!lateNightTopic.value.trim()) errors.push('2:00 AM Conversation Topic');
+            if (!idealFirstText.value.trim()) errors.push('Opening Test Text Message');
+
+            if (errors.length > 0) {
+                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
+                alertModal.style.display = 'flex';
+            } else {
+                summaryName3.textContent = `${givenName.value} ${lastName.value}`;
+
+                step5View.classList.add('hidden');
+                step6View.classList.remove('hidden');
+                pageTitle.textContent = 'Individual Appointment - Red Flag Disclosure';
+            }
+        });
+
+        // Navigation: Step 6 Back -> Step 5
+        backBtnStep6.addEventListener('click', () => {
+            step6View.classList.add('hidden');
+            step5View.classList.remove('hidden');
+            pageTitle.textContent = 'Individual Appointment - Communication Test';
+        });
+
+        // Step 6 Final Submission Validation
+        nextBtnStep6.addEventListener('click', () => {
+            let errors = [];
+
+            if (!exContact.value) errors.push('Status on Exes & Past Chapters');
+            if (!jealousyLevel.value) errors.push('Self-Assessed Jealousy Meter');
+            if (!flakinessRecord.value) errors.push('Plan Cancel / Flakiness Record');
+            if (!foodSharing.value) errors.push('Food Sharing Policy');
+            if (!shoppingPatience.value) errors.push('Patience During Shopping');
+            if (!hangryMeter.value) errors.push('Hangry Index');
+            if (!guiltyPleasure.value.trim()) errors.push('Guilty Pleasure / Weird Habit');
+            if (!confirmRedFlags.checked) errors.push('Red Flag Accuracy Certification');
+
+            if (errors.length > 0) {
+                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
+                alertModal.style.display = 'flex';
+            } else {
+                alert('Application Successfully Submitted! Your appointment, communication test, and Red Flag disclosures have been logged with Consular Officers.');
             }
         });
     </script>
