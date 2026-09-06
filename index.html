@@ -503,6 +503,10 @@
             padding-bottom: 5px;
         }
 
+        .pdf-field.full-width {
+            grid-column: span 2;
+        }
+
         .pdf-field strong {
             color: #555;
             display: block;
@@ -1203,26 +1207,46 @@
                     <div class="pdf-field"><strong>Venue / Site:</strong> <span id="pdfSite">--</span></div>
                     <div class="pdf-field"><strong>Date & Time:</strong> <span id="pdfDateTime">--</span></div>
 
-                    <div class="pdf-section-title">II. CANDIDATE PROFILE</div>
+                    <div class="pdf-section-title">II. PERSONAL INFORMATION</div>
                     <div class="pdf-field"><strong>Full Name:</strong> <span id="pdfFullName">--</span></div>
+                    <div class="pdf-field"><strong>Gender:</strong> <span id="pdfGender">--</span></div>
+                    <div class="pdf-field"><strong>Date of Birth:</strong> <span id="pdfDob">--</span></div>
                     <div class="pdf-field"><strong>Civil Status:</strong> <span id="pdfCivilStatus">--</span></div>
                     <div class="pdf-field"><strong>Occupation:</strong> <span id="pdfOccupation">--</span></div>
-                    <div class="pdf-field"><strong>Residence:</strong> <span id="pdfCity">--</span></div>
-                    <div class="pdf-field"><strong>Zodiac & MBTI:</strong> <span id="pdfZodiacMbti">--</span></div>
+                    <div class="pdf-field"><strong>Residence (City):</strong> <span id="pdfCity">--</span></div>
+                    <div class="pdf-field"><strong>Zodiac Sign:</strong> <span id="pdfZodiac">--</span></div>
+                    <div class="pdf-field"><strong>MBTI Type:</strong> <span id="pdfMbti">--</span></div>
+                    <div class="pdf-field"><strong>Pet Preference:</strong> <span id="pdfPet">--</span></div>
+                    <div class="pdf-field"><strong>Relationship Goal:</strong> <span id="pdfGoal">--</span></div>
                     <div class="pdf-field"><strong>Love Language:</strong> <span id="pdfLoveLanguage">--</span></div>
+                    <div class="pdf-field"><strong>Height:</strong> <span id="pdfHeight">--</span></div>
 
-                    <div class="pdf-section-title">III. EMOTIONAL & COMMUNICATION AUDIT</div>
-                    <div class="pdf-field"><strong>Conflict Style:</strong> <span id="pdfConflict">--</span></div>
-                    <div class="pdf-field"><strong>Texting Speed:</strong> <span id="pdfReply">--</span></div>
-                    <div class="pdf-field"><strong>Green Flag:</strong> <span id="pdfGreenFlag">--</span></div>
-                    <div class="pdf-field"><strong>2:00 AM Topic:</strong> <span id="pdfLateTopic">--</span></div>
+                    <div class="pdf-section-title">III. EMOTIONAL INTELLIGENCE AUDIT</div>
+                    <div class="pdf-field"><strong>Conflict Resolution:</strong> <span id="pdfConflict">--</span></div>
+                    <div class="pdf-field"><strong>Stress Response:</strong> <span id="pdfStress">--</span></div>
+                    <div class="pdf-field"><strong>Apology Style:</strong> <span id="pdfApology">--</span></div>
+                    <div class="pdf-field"><strong>Social Battery:</strong> <span id="pdfSocialBattery">--</span></div>
+                    <div class="pdf-field full-width"><strong>Personal Green Flag:</strong> <span id="pdfGreenFlag">--</span></div>
+                    <div class="pdf-field full-width"><strong>Self-Growth Area:</strong> <span id="pdfGrowth">--</span></div>
+                    <div class="pdf-field full-width"><strong>Cheer-Up Protocol:</strong> <span id="pdfCheerUp">--</span></div>
 
-                    <div class="pdf-section-title">IV. RED FLAG & QUIRK DISCLOSURES</div>
+                    <div class="pdf-section-title">IV. COMMUNICATION AUDIT</div>
+                    <div class="pdf-field"><strong>Average Reply Speed:</strong> <span id="pdfReplySpeed">--</span></div>
+                    <div class="pdf-field"><strong>Late Reply Protocol:</strong> <span id="pdfLateProtocol">--</span></div>
+                    <div class="pdf-field"><strong>Voice Notes Stance:</strong> <span id="pdfVoiceNote">--</span></div>
+                    <div class="pdf-field"><strong>Humor / Banter Style:</strong> <span id="pdfHumor">--</span></div>
+                    <div class="pdf-field full-width"><strong>Go-To Meme / GIF:</strong> <span id="pdfMeme">--</span></div>
+                    <div class="pdf-field full-width"><strong>2:00 AM Conversation Topic:</strong> <span id="pdfLateTopic">--</span></div>
+                    <div class="pdf-field full-width"><strong>Opening Test Message:</strong> <span id="pdfFirstText">--</span></div>
+
+                    <div class="pdf-section-title">V. RED FLAG & QUIRK DISCLOSURES</div>
                     <div class="pdf-field"><strong>Ex Status:</strong> <span id="pdfEx">--</span></div>
                     <div class="pdf-field"><strong>Jealousy Meter:</strong> <span id="pdfJealousy">--</span></div>
+                    <div class="pdf-field"><strong>Flakiness Record:</strong> <span id="pdfFlakiness">--</span></div>
                     <div class="pdf-field"><strong>Food Sharing Policy:</strong> <span id="pdfFood">--</span></div>
-                    <div class="pdf-field"><strong>Hangry Rating:</strong> <span id="pdfHangry">--</span></div>
-                    <div class="pdf-field" style="grid-column: span 2;"><strong>Harmless Guilty Pleasure:</strong> <span id="pdfGuilty">--</span></div>
+                    <div class="pdf-field"><strong>Shopping Patience:</strong> <span id="pdfShopping">--</span></div>
+                    <div class="pdf-field"><strong>Hangry Index:</strong> <span id="pdfHangry">--</span></div>
+                    <div class="pdf-field full-width"><strong>Harmless Guilty Pleasure / Habit:</strong> <span id="pdfGuilty">--</span></div>
                 </div>
 
                 <p style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 15px;">
@@ -1320,6 +1344,7 @@
         // Step 3 Inputs
         const lastName = document.getElementById('lastName');
         const givenName = document.getElementById('givenName');
+        const middleName = document.getElementById('middleName');
         const dob = document.getElementById('dob');
         const civilStatus = document.getElementById('civilStatus');
         const occupation = document.getElementById('occupation');
@@ -1328,6 +1353,7 @@
         const mbti = document.getElementById('mbti');
         const relationshipGoal = document.getElementById('relationshipGoal');
         const loveLanguage = document.getElementById('loveLanguage');
+        const height = document.getElementById('height');
         const backBtnStep3 = document.getElementById('backBtnStep3');
         const nextBtnStep3 = document.getElementById('nextBtnStep3');
 
@@ -1338,6 +1364,7 @@
         const socialBattery = document.getElementById('socialBattery');
         const greenFlagPrompt = document.getElementById('greenFlagPrompt');
         const growthArea = document.getElementById('growthArea');
+        const cheerUpPrompt = document.getElementById('cheerUpPrompt');
         const backBtnStep4 = document.getElementById('backBtnStep4');
         const nextBtnStep4 = document.getElementById('nextBtnStep4');
 
@@ -1572,22 +1599,52 @@
                 alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
                 alertModal.style.display = 'flex';
             } else {
-                // Populate Confirmation PDF Fields
+                const genderVal = document.querySelector('input[name="gender"]:checked')?.value || 'Not Specified';
+                const petVal = document.querySelector('input[name="petPreference"]:checked')?.value || 'Not Specified';
+                const middleVal = middleName.value.trim() ? ` ${middleName.value.trim()}` : '';
+
+                // Section I
                 document.getElementById('pdfSite').textContent = siteInput.value;
                 document.getElementById('pdfDateTime').textContent = `${dateInput.value} @ ${timeInput.value}`;
-                document.getElementById('pdfFullName').textContent = `${givenName.value} ${lastName.value}`;
+
+                // Section II
+                document.getElementById('pdfFullName').textContent = `${givenName.value}${middleVal} ${lastName.value}`;
+                document.getElementById('pdfGender').textContent = genderVal;
+                document.getElementById('pdfDob').textContent = dob.value;
                 document.getElementById('pdfCivilStatus').textContent = civilStatus.value;
                 document.getElementById('pdfOccupation').textContent = occupation.value;
                 document.getElementById('pdfCity').textContent = city.value;
-                document.getElementById('pdfZodiacMbti').textContent = `${zodiac.value} | ${mbti.value}`;
+                document.getElementById('pdfZodiac').textContent = zodiac.value;
+                document.getElementById('pdfMbti').textContent = mbti.value;
+                document.getElementById('pdfPet').textContent = petVal;
+                document.getElementById('pdfGoal').textContent = relationshipGoal.value;
                 document.getElementById('pdfLoveLanguage').textContent = loveLanguage.value;
+                document.getElementById('pdfHeight').textContent = height.value || 'N/A';
+
+                // Section III
                 document.getElementById('pdfConflict').textContent = conflictStyle.value;
-                document.getElementById('pdfReply').textContent = replySpeed.value;
+                document.getElementById('pdfStress').textContent = stressResponse.value;
+                document.getElementById('pdfApology').textContent = apologyStyle.value;
+                document.getElementById('pdfSocialBattery').textContent = socialBattery.value;
                 document.getElementById('pdfGreenFlag').textContent = greenFlagPrompt.value;
+                document.getElementById('pdfGrowth').textContent = growthArea.value;
+                document.getElementById('pdfCheerUp').textContent = cheerUpPrompt.value || 'N/A';
+
+                // Section IV
+                document.getElementById('pdfReplySpeed').textContent = replySpeed.value;
+                document.getElementById('pdfLateProtocol').textContent = lateReplyProtocol.value;
+                document.getElementById('pdfVoiceNote').textContent = voiceNoteStance.value;
+                document.getElementById('pdfHumor').textContent = humorStyle.value;
+                document.getElementById('pdfMeme').textContent = goToMeme.value;
                 document.getElementById('pdfLateTopic').textContent = lateNightTopic.value;
+                document.getElementById('pdfFirstText').textContent = idealFirstText.value;
+
+                // Section V
                 document.getElementById('pdfEx').textContent = exContact.value;
                 document.getElementById('pdfJealousy').textContent = jealousyLevel.value;
+                document.getElementById('pdfFlakiness').textContent = flakinessRecord.value;
                 document.getElementById('pdfFood').textContent = foodSharing.value;
+                document.getElementById('pdfShopping').textContent = shoppingPatience.value;
                 document.getElementById('pdfHangry').textContent = hangryMeter.value;
                 document.getElementById('pdfGuilty').textContent = guiltyPleasure.value;
 
