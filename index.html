@@ -252,6 +252,55 @@
             margin-bottom: 5px;
         }
 
+        /* Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9f9f9;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            padding: 10px 15px;
+            width: 300px;
+            margin: 15px 0;
+            box-shadow: 0 0 4px rgba(0,0,0,0.05);
+        }
+
+        .captcha-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .captcha-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .captcha-label {
+            font-size: 0.85rem;
+            color: #222;
+        }
+
+        .captcha-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .captcha-logo {
+            width: 28px;
+            height: 28px;
+        }
+
+        .captcha-text {
+            font-size: 0.6rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
         .nav-buttons {
             display: flex;
             justify-content: flex-end;
@@ -401,6 +450,7 @@
     <div class="container">
         <h3 class="page-title" id="pageTitle">Schedule an Appointment</h3>
         
+        <!-- STEP 1: TERMS PAGE -->
         <div id="step1View" class="content-grid">
             <aside>
                 <ul class="sidebar-menu">
@@ -450,11 +500,11 @@
             </main>
         </div>
 
+        <!-- STEP 2: SITE LOCATION PAGE -->
         <div id="step2View" class="content-grid hidden">
             <aside>
                 <ul class="sidebar-menu">
                     <li class="active"><a href="#">📍 Site Location</a></li>
-                    <li><a href="#">📅 Date and Time</a></li>
                     <li><a href="#">👤 Personal Information</a></li>
                     <li><a href="#">💖 Preferences & Flags</a></li>
                     <li><a href="#">📞 Contact Information</a></li>
@@ -462,7 +512,7 @@
             </aside>
 
             <main>
-                <p class="form-section-title">Specify the site and schedule where you want to set an appointment:</p>
+                <p class="form-section-title">Specify the site where you want to set an appointment:</p>
 
                 <div class="form-group">
                     <label>Region <span class="req">*</span></label>
@@ -483,32 +533,30 @@
                     <input type="text" id="siteInput" class="form-control" placeholder="e.g., SM Mall of Asia, Coffee Shop, Park">
                 </div>
 
-                <div class="form-group">
-                    <label for="dateInput">Date <span class="req">*</span></label>
-                    <input type="date" id="dateInput" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="timeInput">Time <span class="req">*</span></label>
-                    <select id="timeInput" class="form-control">
-                        <option value="">-- Select Time Slot --</option>
-                        <option>09:00 AM - Morning Coffee</option>
-                        <option>12:00 PM - Lunch Date</option>
-                        <option>03:00 PM - Afternoon Stroll</option>
-                        <option>06:00 PM - Dinner Date</option>
-                        <option>08:00 PM - Late Night Drinks</option>
-                    </select>
-                </div>
-
                 <div class="notice-footer-box">
                     <div class="notice-title">NOTICE:</div>
                     <p>1. Appointments booked at any DFA Romantic Consular Office are non-transferable and subject to quality conversation standard guidelines.</p>
                     <p>2. You only have <strong>30 minutes</strong> to complete the whole application process.</p>
                 </div>
 
-                <div class="consent-box" style="margin-top: 15px;">
+                <div class="consent-box" style="margin-top: 15px; margin-bottom: 10px;">
                     <input type="checkbox" id="confirmLocation">
                     <label for="confirmLocation">I confirm that I have read, understood and agree to the above conditions.</label>
+                </div>
+
+                <!-- reCAPTCHA Box -->
+                <div class="captcha-box">
+                    <div class="captcha-left">
+                        <input type="checkbox" id="captchaCheck" class="captcha-checkbox">
+                        <label for="captchaCheck" class="captcha-label">I'm not a robot</label>
+                    </div>
+                    <div class="captcha-right">
+                        <svg class="captcha-logo" viewBox="0 0 24 24">
+                            <path fill="#1A73E8" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/>
+                            <path fill="#1A73E8" d="M12 6v6l4.25 2.55.75-1.23-3.5-2.07V6z"/>
+                        </svg>
+                        <span class="captcha-text">reCAPTCHA</span>
+                    </div>
                 </div>
 
                 <div class="nav-buttons">
@@ -519,6 +567,7 @@
         </div>
     </div>
 
+    <!-- System Pop-up Modal -->
     <div class="modal-overlay" id="groupModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -572,6 +621,7 @@
         const pageTitle = document.getElementById('pageTitle');
         const backBtn = document.getElementById('backBtn');
         const confirmLocation = document.getElementById('confirmLocation');
+        const captchaCheck = document.getElementById('captchaCheck');
         const nextBtn = document.getElementById('nextBtn');
 
         // Checkbox enabling start buttons
@@ -613,9 +663,13 @@
             pageTitle.textContent = 'Schedule an Appointment';
         });
 
-        confirmLocation.addEventListener('change', () => {
-            nextBtn.disabled = !confirmLocation.checked;
-        });
+        // Require both agreement checkbox and captcha to unlock Next
+        function validateStep2() {
+            nextBtn.disabled = !(confirmLocation.checked && captchaCheck.checked);
+        }
+
+        confirmLocation.addEventListener('change', validateStep2);
+        captchaCheck.addEventListener('change', validateStep2);
     </script>
 
 </body>
