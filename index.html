@@ -82,11 +82,11 @@
 
         .content-grid {
             display: grid;
-            grid-template-columns: 200px 1fr;
+            grid-template-columns: 220px 1fr;
             gap: 30px;
         }
 
-        /* Sidebar */
+        /* Sidebar Steps */
         .sidebar-menu {
             list-style: none;
             border: 1px solid #e0e0e0;
@@ -103,16 +103,17 @@
             padding: 10px 15px;
             text-decoration: none;
             font-size: 0.85rem;
-            color: #333;
+            color: #666;
+            background: #fafafa;
         }
 
         .sidebar-menu li.active a {
-            background-color: #b83268;
+            background-color: #9f2b58;
             color: white;
             font-weight: bold;
         }
 
-        /* Main Notice Area */
+        /* Main Area Styles */
         .welcome-text {
             font-size: 0.85rem;
             margin-bottom: 20px;
@@ -134,7 +135,6 @@
             font-size: 0.95rem;
         }
 
-        /* Terms Section */
         .terms-header {
             text-align: center;
             font-size: 1.1rem;
@@ -162,7 +162,6 @@
             cursor: pointer;
         }
 
-        /* Action Buttons */
         .button-group {
             display: flex;
             justify-content: center;
@@ -203,7 +202,72 @@
             margin-top: 15px;
         }
 
-        /* Modal / Pop-up Styles */
+        /* Form Controls for Step 2 */
+        .form-section-title {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .form-group label span.req {
+            color: #c53030;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 0.85rem;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: white;
+        }
+
+        .form-control:disabled {
+            background-color: #f0f0f0;
+            color: #666;
+        }
+
+        .notice-footer-box {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .notice-title {
+            color: #c53030;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn-secondary {
+            background-color: #718096;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4a5568;
+        }
+
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -317,6 +381,10 @@
             justify-content: space-between;
             color: #b87a93;
         }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -331,9 +399,9 @@
     </header>
 
     <div class="container">
-        <h3 class="page-title">Schedule an Appointment</h3>
+        <h3 class="page-title" id="pageTitle">Schedule an Appointment</h3>
         
-        <div class="content-grid">
+        <div id="step1View" class="content-grid">
             <aside>
                 <ul class="sidebar-menu">
                     <li class="active"><a href="#">Appointment</a></li>
@@ -381,9 +449,76 @@
                 </div>
             </main>
         </div>
+
+        <div id="step2View" class="content-grid hidden">
+            <aside>
+                <ul class="sidebar-menu">
+                    <li class="active"><a href="#">📍 Site Location</a></li>
+                    <li><a href="#">📅 Date and Time</a></li>
+                    <li><a href="#">👤 Personal Information</a></li>
+                    <li><a href="#">💖 Preferences & Flags</a></li>
+                    <li><a href="#">📞 Contact Information</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <p class="form-section-title">Specify the site and schedule where you want to set an appointment:</p>
+
+                <div class="form-group">
+                    <label>Region <span class="req">*</span></label>
+                    <select class="form-control" disabled>
+                        <option selected>ASIA PACIFIC</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Country/Special Administrative Region <span class="req">*</span></label>
+                    <select class="form-control" disabled>
+                        <option selected>PHILIPPINES</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="siteInput">Site / Romantic Venue <span class="req">*</span></label>
+                    <input type="text" id="siteInput" class="form-control" placeholder="e.g., SM Mall of Asia, Coffee Shop, Park">
+                </div>
+
+                <div class="form-group">
+                    <label for="dateInput">Date <span class="req">*</span></label>
+                    <input type="date" id="dateInput" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="timeInput">Time <span class="req">*</span></label>
+                    <select id="timeInput" class="form-control">
+                        <option value="">-- Select Time Slot --</option>
+                        <option>09:00 AM - Morning Coffee</option>
+                        <option>12:00 PM - Lunch Date</option>
+                        <option>03:00 PM - Afternoon Stroll</option>
+                        <option>06:00 PM - Dinner Date</option>
+                        <option>08:00 PM - Late Night Drinks</option>
+                    </select>
+                </div>
+
+                <div class="notice-footer-box">
+                    <div class="notice-title">NOTICE:</div>
+                    <p>1. Appointments booked at any DFA Romantic Consular Office are non-transferable and subject to quality conversation standard guidelines.</p>
+                    <p>2. You only have <strong>30 minutes</strong> to complete the whole application process.</p>
+                </div>
+
+                <div class="consent-box" style="margin-top: 15px;">
+                    <input type="checkbox" id="confirmLocation">
+                    <label for="confirmLocation">I confirm that I have read, understood and agree to the above conditions.</label>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="backBtn">BACK</button>
+                    <button class="btn" id="nextBtn" disabled>NEXT</button>
+                </div>
+            </main>
+        </div>
     </div>
 
-    <!-- System Pop-up Modal -->
     <div class="modal-overlay" id="groupModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -432,12 +567,21 @@
         const groupModal = document.getElementById('groupModal');
         const closeModal = document.getElementById('closeModal');
 
+        const step1View = document.getElementById('step1View');
+        const step2View = document.getElementById('step2View');
+        const pageTitle = document.getElementById('pageTitle');
+        const backBtn = document.getElementById('backBtn');
+        const confirmLocation = document.getElementById('confirmLocation');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // Checkbox enabling start buttons
         consentCheckbox.addEventListener('change', () => {
             const isChecked = consentCheckbox.checked;
             indivBtn.disabled = !isChecked;
             groupBtn.disabled = !isChecked;
         });
 
+        // Group Appointment Popup
         groupBtn.addEventListener('click', () => {
             if (!groupBtn.disabled) {
                 groupModal.style.display = 'flex';
@@ -452,6 +596,25 @@
             if (e.target === groupModal) {
                 groupModal.style.display = 'none';
             }
+        });
+
+        // Navigation between pages
+        indivBtn.addEventListener('click', () => {
+            if (!indivBtn.disabled) {
+                step1View.classList.add('hidden');
+                step2View.classList.remove('hidden');
+                pageTitle.textContent = 'Individual Appointment - Site Location';
+            }
+        });
+
+        backBtn.addEventListener('click', () => {
+            step2View.classList.add('hidden');
+            step1View.classList.remove('hidden');
+            pageTitle.textContent = 'Schedule an Appointment';
+        });
+
+        confirmLocation.addEventListener('change', () => {
+            nextBtn.disabled = !confirmLocation.checked;
         });
     </script>
 
