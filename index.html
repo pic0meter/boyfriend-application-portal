@@ -20,7 +20,7 @@
             min-height: 100vh;
         }
 
-        /* Header - Dark Romantic Rose Pink */
+        /* Header */
         header {
             background-color: #9f2b58;
             color: white;
@@ -61,7 +61,7 @@
             opacity: 0.9;
         }
 
-        /* Main Container */
+        /* Container */
         .container {
             max-width: 1100px;
             margin: 20px auto;
@@ -86,7 +86,7 @@
             gap: 30px;
         }
 
-        /* Sidebar Steps */
+        /* Sidebar */
         .sidebar-menu {
             list-style: none;
             border: 1px solid #e0e0e0;
@@ -113,7 +113,7 @@
             font-weight: bold;
         }
 
-        /* Main Area Styles */
+        /* Step 1 Styles */
         .welcome-text {
             font-size: 0.85rem;
             margin-bottom: 20px;
@@ -234,13 +234,24 @@
             background-color: white;
         }
 
+        .form-control:focus {
+            outline: none;
+            border-color: #9f2b58;
+        }
+
         .form-control:disabled {
             background-color: #f0f0f0;
             color: #666;
         }
 
+        .date-time-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
         .notice-footer-box {
-            margin-top: 30px;
+            margin-top: 25px;
             font-size: 0.8rem;
             line-height: 1.5;
             color: #444;
@@ -396,7 +407,7 @@
             background-color: #7d2045;
         }
 
-        /* Footer - Dark Magenta/Plum */
+        /* Footer */
         footer {
             background-color: #3b1122;
             color: white;
@@ -500,7 +511,7 @@
             </main>
         </div>
 
-        <!-- STEP 2: SITE LOCATION PAGE -->
+        <!-- STEP 2: SITE LOCATION & SCHEDULE PAGE -->
         <div id="step2View" class="content-grid hidden">
             <aside>
                 <ul class="sidebar-menu">
@@ -512,7 +523,7 @@
             </aside>
 
             <main>
-                <p class="form-section-title">Specify the site where you want to set an appointment:</p>
+                <p class="form-section-title">Specify the site and appointment schedule where you want to set a date:</p>
 
                 <div class="form-group">
                     <label>Region <span class="req">*</span></label>
@@ -531,6 +542,26 @@
                 <div class="form-group">
                     <label for="siteInput">Site / Romantic Venue <span class="req">*</span></label>
                     <input type="text" id="siteInput" class="form-control" placeholder="e.g., SM Mall of Asia, Coffee Shop, Park">
+                </div>
+
+                <!-- Date & Time Inputs -->
+                <div class="date-time-row">
+                    <div class="form-group">
+                        <label for="dateInput">Date <span class="req">*</span></label>
+                        <input type="date" id="dateInput" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timeInput">Time Slot <span class="req">*</span></label>
+                        <select id="timeInput" class="form-control">
+                            <option value="">-- Select Time --</option>
+                            <option value="09:00 AM">09:00 AM - Morning Coffee</option>
+                            <option value="12:00 PM">12:00 PM - Lunch Date</option>
+                            <option value="03:00 PM">03:00 PM - Afternoon Stroll</option>
+                            <option value="06:00 PM">06:00 PM - Dinner Date</option>
+                            <option value="08:00 PM">08:00 PM - Late Night Drinks</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="notice-footer-box">
@@ -561,13 +592,29 @@
 
                 <div class="nav-buttons">
                     <button class="btn btn-secondary" id="backBtn">BACK</button>
-                    <button class="btn" id="nextBtn" disabled>NEXT</button>
+                    <button class="btn" id="nextBtn">NEXT</button>
                 </div>
             </main>
         </div>
     </div>
 
-    <!-- System Pop-up Modal -->
+    <!-- Alert Modal for Incomplete Form -->
+    <div class="modal-overlay" id="alertModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                APPLICATION INCOMPLETE
+            </div>
+            <div class="modal-body">
+                <p id="alertMessage">Please complete all required fields before proceeding.</p>
+                <span class="error-code">Error Code: MISSING_DETAILS</span>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close-btn" id="closeAlertModal">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Pop-up Modal for Group -->
     <div class="modal-overlay" id="groupModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -579,7 +626,7 @@
                 <span class="error-code">Error Code: TWO_IS_A_CROWD</span>
             </div>
             <div class="modal-footer">
-                <button class="modal-close-btn" id="closeModal">I UNDERSTAND</button>
+                <button class="modal-close-btn" id="closeGroupModal">I UNDERSTAND</button>
             </div>
         </div>
     </div>
@@ -614,17 +661,25 @@
         const indivBtn = document.getElementById('indivBtn');
         const groupBtn = document.getElementById('groupBtn');
         const groupModal = document.getElementById('groupModal');
-        const closeModal = document.getElementById('closeModal');
+        const closeGroupModal = document.getElementById('closeGroupModal');
 
         const step1View = document.getElementById('step1View');
         const step2View = document.getElementById('step2View');
         const pageTitle = document.getElementById('pageTitle');
         const backBtn = document.getElementById('backBtn');
-        const confirmLocation = document.getElementById('confirmLocation');
-        const captchaCheck = document.getElementById('captchaCheck');
         const nextBtn = document.getElementById('nextBtn');
 
-        // Checkbox enabling start buttons
+        const siteInput = document.getElementById('siteInput');
+        const dateInput = document.getElementById('dateInput');
+        const timeInput = document.getElementById('timeInput');
+        const confirmLocation = document.getElementById('confirmLocation');
+        const captchaCheck = document.getElementById('captchaCheck');
+
+        const alertModal = document.getElementById('alertModal');
+        const alertMessage = document.getElementById('alertMessage');
+        const closeAlertModal = document.getElementById('closeAlertModal');
+
+        // Toggle Step 1 buttons based on agreement
         consentCheckbox.addEventListener('change', () => {
             const isChecked = consentCheckbox.checked;
             indivBtn.disabled = !isChecked;
@@ -638,14 +693,17 @@
             }
         });
 
-        closeModal.addEventListener('click', () => {
+        closeGroupModal.addEventListener('click', () => {
             groupModal.style.display = 'none';
         });
 
+        closeAlertModal.addEventListener('click', () => {
+            alertModal.style.display = 'none';
+        });
+
         window.addEventListener('click', (e) => {
-            if (e.target === groupModal) {
-                groupModal.style.display = 'none';
-            }
+            if (e.target === groupModal) groupModal.style.display = 'none';
+            if (e.target === alertModal) alertModal.style.display = 'none';
         });
 
         // Navigation between pages
@@ -663,13 +721,23 @@
             pageTitle.textContent = 'Schedule an Appointment';
         });
 
-        // Require both agreement checkbox and captcha to unlock Next
-        function validateStep2() {
-            nextBtn.disabled = !(confirmLocation.checked && captchaCheck.checked);
-        }
+        // Validation popup when Next is clicked
+        nextBtn.addEventListener('click', () => {
+            let errors = [];
 
-        confirmLocation.addEventListener('change', validateStep2);
-        captchaCheck.addEventListener('change', validateStep2);
+            if (!siteInput.value.trim()) errors.push('Site / Romantic Venue');
+            if (!dateInput.value) errors.push('Date');
+            if (!timeInput.value) errors.push('Time Slot');
+            if (!confirmLocation.checked) errors.push('Confirmation Checkbox');
+            if (!captchaCheck.checked) errors.push('reCAPTCHA Verification');
+
+            if (errors.length > 0) {
+                alertMessage.innerHTML = `Please complete the following required items before proceeding:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
+                alertModal.style.display = 'flex';
+            } else {
+                alert('Details validated successfully! Proceeding to Personal Information...');
+            }
+        });
     </script>
 
 </body>
