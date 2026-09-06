@@ -239,6 +239,11 @@
             background-color: white;
         }
 
+        textarea.form-control {
+            resize: vertical;
+            min-height: 70px;
+        }
+
         .form-control:focus {
             outline: none;
             border-color: #9f2b58;
@@ -510,7 +515,6 @@
     <div class="container">
         <h3 class="page-title" id="pageTitle">Schedule an Appointment</h3>
         
-        <!-- STEP 1: TERMS PAGE -->
         <div id="step1View" class="content-grid">
             <aside>
                 <ul class="sidebar-menu">
@@ -560,13 +564,12 @@
             </main>
         </div>
 
-        <!-- STEP 2: SITE LOCATION & SCHEDULE PAGE -->
         <div id="step2View" class="content-grid hidden">
             <aside>
                 <ul class="sidebar-menu">
                     <li class="active"><a href="#">📍 Site Location</a></li>
                     <li><a href="#">👤 Personal Information</a></li>
-                    <li><a href="#">💖 Preferences & Flags</a></li>
+                    <li><a href="#">🧠 Emotional Intelligence</a></li>
                 </ul>
             </aside>
 
@@ -592,7 +595,6 @@
                     <input type="text" id="siteInput" class="form-control" placeholder="e.g., SM Mall of Asia, Coffee Shop, Park">
                 </div>
 
-                <!-- Date & Time Inputs -->
                 <div class="grid-2">
                     <div class="form-group">
                         <label for="dateInput">Date <span class="req">*</span></label>
@@ -626,7 +628,6 @@
                     <label for="confirmLocation">I confirm that I have read, understood and agree to the above conditions.</label>
                 </div>
 
-                <!-- reCAPTCHA Box -->
                 <div class="captcha-box">
                     <div class="captcha-left">
                         <input type="checkbox" id="captchaCheck" class="captcha-checkbox">
@@ -648,13 +649,12 @@
             </main>
         </div>
 
-        <!-- STEP 3: PERSONAL INFORMATION PAGE -->
         <div id="step3View" class="content-grid hidden">
             <aside>
                 <ul class="sidebar-menu">
                     <li class="completed"><a href="#">✓ Site Location</a></li>
                     <li class="active"><a href="#">👤 Personal Information</a></li>
-                    <li><a href="#">💖 Preferences & Flags</a></li>
+                    <li><a href="#">🧠 Emotional Intelligence</a></li>
                 </ul>
             </aside>
 
@@ -668,7 +668,6 @@
                     <strong>WARNING:</strong> Ensure that all details in the name (last name, given name) and personal details are accurate. Misrepresentations may result in instantaneous rejection or immediate ghosting.
                 </div>
 
-                <!-- Name Fields -->
                 <div class="grid-3">
                     <div class="form-group">
                         <label for="lastName">Last Name <span class="req">*</span></label>
@@ -684,7 +683,6 @@
                     </div>
                 </div>
 
-                <!-- Gender, Birthday & Civil Status -->
                 <div class="grid-3">
                     <div class="form-group">
                         <label>Gender <span class="req">*</span></label>
@@ -709,7 +707,6 @@
                     </div>
                 </div>
 
-                <!-- Occupation, Address (City) & Zodiac -->
                 <div class="grid-3">
                     <div class="form-group">
                         <label for="occupation">Occupation / Profession <span class="req">*</span></label>
@@ -739,7 +736,6 @@
                     </div>
                 </div>
 
-                <!-- Relationship Details -->
                 <div class="grid-3">
                     <div class="form-group">
                         <label for="relationshipGoal">Relationship Goal <span class="req">*</span></label>
@@ -780,9 +776,95 @@
                 </div>
             </main>
         </div>
+
+        <div id="step4View" class="content-grid hidden">
+            <aside>
+                <ul class="sidebar-menu">
+                    <li class="completed"><a href="#">✓ Site Location</a></li>
+                    <li class="completed"><a href="#">✓ Personal Information</a></li>
+                    <li class="active"><a href="#">🧠 Emotional Intelligence</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <div class="summary-banner">
+                    <span><strong>Applicant:</strong> <span id="summaryName">--</span></span>
+                    <span><strong>Site:</strong> <span id="summarySite2">--</span></span>
+                </div>
+
+                <div class="warning-box">
+                    <strong>EMOTIONAL EVALUATION NOTICE:</strong> Honest self-assessment is required. Responses are evaluated under Section 143 of the Emotional Maturity Act to determine date compatibility.
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="conflictStyle">Conflict Resolution Style <span class="req">*</span></label>
+                        <select id="conflictStyle" class="form-control">
+                            <option value="">-- SELECT STYLE --</option>
+                            <option value="Talk it out immediately">Talk it out immediately calmly</option>
+                            <option value="Need cool-off time first">Need cool-off time before discussing</option>
+                            <option value="Use humor to defuse">Use humor/lightheartedness to defuse</option>
+                            <option value="Write down thoughts">Write down thoughts instead of talking</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="stressResponse">How do you handle a bad day? <span class="req">*</span></label>
+                        <select id="stressResponse" class="form-control">
+                            <option value="">-- SELECT RESPONSE --</option>
+                            <option value="Venting to partner">Venting and talking about it</option>
+                            <option value="Quiet personal time">Quiet alone time / gaming / reading</option>
+                            <option value="Physical movement">Physical workout or walks</option>
+                            <option value="Food and comfort media">Eating good food & binge-watching</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="apologyStyle">Apology Style (When in the wrong) <span class="req">*</span></label>
+                        <select id="apologyStyle" class="form-control">
+                            <option value="">-- SELECT APOLOGY STYLE --</option>
+                            <option value="Direct verbal apology">Direct verbal apology & change in behavior</option>
+                            <option value="Acts of service">Offering food / acts of service to make up</option>
+                            <option value="Affection & hugs">Physical affection and sincere talk</option>
+                            <option value="Space then make-up">Giving space first, then making amends</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="socialBattery">Social Battery & Intro/Extroversion <span class="req">*</span></label>
+                        <select id="socialBattery" class="form-control">
+                            <option value="">-- SELECT BATTERY TYPE --</option>
+                            <option value="Introvert">Introvert (Recharges at home)</option>
+                            <option value="Extrovert">Extrovert (Recharges with people)</option>
+                            <option value="Ambivert">Ambivert (Balanced depending on mood)</option>
+                            <option value="Social Butterfly">Social Butterfly (Loves large groups)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="greenFlagPrompt">What is your biggest personal Green Flag? <span class="req">*</span></label>
+                    <input type="text" id="greenFlagPrompt" class="form-control" placeholder="e.g. I am a great listener, punctual, thoughtful with small gifts">
+                </div>
+
+                <div class="form-group">
+                    <label for="growthArea">What is one area of self-growth you are currently working on? <span class="req">*</span></label>
+                    <textarea id="growthArea" class="form-control" placeholder="e.g. Learning to set healthier boundaries, managing work-life balance..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="cheerUpPrompt">How can someone best support or cheer you up when you feel overwhelmed?</label>
+                    <input type="text" id="cheerUpPrompt" class="form-control" placeholder="e.g. Bring me iced coffee, give me a hug, let me rest quietly">
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="backBtnStep4">BACK</button>
+                    <button class="btn" id="nextBtnStep4">SUBMIT APPLICATION</button>
+                </div>
+            </main>
+        </div>
     </div>
 
-    <!-- Alert Modal for Incomplete Form -->
     <div class="modal-overlay" id="alertModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -798,7 +880,6 @@
         </div>
     </div>
 
-    <!-- System Pop-up Modal for Group -->
     <div class="modal-overlay" id="groupModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -850,6 +931,7 @@
         const step1View = document.getElementById('step1View');
         const step2View = document.getElementById('step2View');
         const step3View = document.getElementById('step3View');
+        const step4View = document.getElementById('step4View');
         const pageTitle = document.getElementById('pageTitle');
 
         // Step 2 Inputs
@@ -874,10 +956,22 @@
         const backBtnStep3 = document.getElementById('backBtnStep3');
         const nextBtnStep3 = document.getElementById('nextBtnStep3');
 
-        // Summary labels on Step 3
+        // Step 4 Inputs
+        const conflictStyle = document.getElementById('conflictStyle');
+        const stressResponse = document.getElementById('stressResponse');
+        const apologyStyle = document.getElementById('apologyStyle');
+        const socialBattery = document.getElementById('socialBattery');
+        const greenFlagPrompt = document.getElementById('greenFlagPrompt');
+        const growthArea = document.getElementById('growthArea');
+        const backBtnStep4 = document.getElementById('backBtnStep4');
+        const nextBtnStep4 = document.getElementById('nextBtnStep4');
+
+        // Summary Labels
         const summarySite = document.getElementById('summarySite');
         const summaryDate = document.getElementById('summaryDate');
         const summaryTime = document.getElementById('summaryTime');
+        const summaryName = document.getElementById('summaryName');
+        const summarySite2 = document.getElementById('summarySite2');
 
         // Alert Modal
         const alertModal = document.getElementById('alertModal');
@@ -939,7 +1033,6 @@
                 alertMessage.innerHTML = `Please complete the following required items before proceeding:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
                 alertModal.style.display = 'flex';
             } else {
-                // Populate summary header on Step 3
                 summarySite.textContent = siteInput.value;
                 summaryDate.textContent = dateInput.value;
                 summaryTime.textContent = timeInput.value;
@@ -957,7 +1050,7 @@
             pageTitle.textContent = 'Individual Appointment - Site Location';
         });
 
-        // Step 3 Next Validation
+        // Navigation: Step 3 Next -> Step 4
         nextBtnStep3.addEventListener('click', () => {
             const genderSelected = document.querySelector('input[name="gender"]:checked');
             let errors = [];
@@ -977,7 +1070,38 @@
                 alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
                 alertModal.style.display = 'flex';
             } else {
-                alert('Personal Information validated! Proceeding to Preferences & Flags...');
+                summaryName.textContent = `${givenName.value} ${lastName.value}`;
+                summarySite2.textContent = siteInput.value;
+
+                step3View.classList.add('hidden');
+                step4View.classList.remove('hidden');
+                pageTitle.textContent = 'Individual Appointment - Emotional Intelligence';
+            }
+        });
+
+        // Navigation: Step 4 Back -> Step 3
+        backBtnStep4.addEventListener('click', () => {
+            step4View.classList.add('hidden');
+            step3View.classList.remove('hidden');
+            pageTitle.textContent = 'Individual Appointment - Personal Information';
+        });
+
+        // Step 4 Final Submission Validation
+        nextBtnStep4.addEventListener('click', () => {
+            let errors = [];
+
+            if (!conflictStyle.value) errors.push('Conflict Resolution Style');
+            if (!stressResponse.value) errors.push('How do you handle a bad day?');
+            if (!apologyStyle.value) errors.push('Apology Style');
+            if (!socialBattery.value) errors.push('Social Battery');
+            if (!greenFlagPrompt.value.trim()) errors.push('Personal Green Flag');
+            if (!growthArea.value.trim()) errors.push('Self-growth Area');
+
+            if (errors.length > 0) {
+                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
+                alertModal.style.display = 'flex';
+            } else {
+                alert('Application Submitted Successfully! Your appointment booking is under review by Consular Officers.');
             }
         });
     </script>
