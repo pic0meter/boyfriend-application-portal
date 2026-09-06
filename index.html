@@ -462,6 +462,59 @@
             background-color: #7d2045;
         }
 
+        /* Confirmation / Summary PDF View Styles */
+        .confirmation-box {
+            border: 2px dashed #9f2b58;
+            padding: 25px;
+            background: #fffafc;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+
+        .conf-header {
+            text-align: center;
+            color: #9f2b58;
+            border-bottom: 2px solid #9f2b58;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .pdf-section-title {
+            grid-column: span 2;
+            background: #9f2b58;
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 10px;
+            border-radius: 2px;
+        }
+
+        .pdf-field {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .pdf-field strong {
+            color: #555;
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .pdf-field span {
+            color: #111;
+            font-weight: bold;
+        }
+
         /* Footer */
         footer {
             background-color: #3b1122;
@@ -499,6 +552,35 @@
 
         .hidden {
             display: none !important;
+        }
+
+        /* PRINT / EXPORT PDF STYLES */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+
+            header, footer, aside, .nav-buttons, .subtext-note, .warning-box, .notice-footer-box, .summary-banner, .modal-overlay {
+                display: none !important;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .content-grid {
+                display: block;
+            }
+
+            .confirmation-box {
+                border: 2px solid #9f2b58;
+                background: white;
+            }
         }
     </style>
 </head>
@@ -1036,17 +1118,17 @@
                         <label for="jealousyLevel">Self-Assessed Jealousy Meter <span class="req">*</span></label>
                         <select id="jealousyLevel" class="form-control">
                             <option value="">-- SELECT JEALOUSY LEVEL --</option>
-                            <option value="1 - Very Chill">Level 1: Unbothered King/Queen (Trust-first)</option>
-                            <option value="2 - Healthy Protection">Level 2: Healthy protective instincts</option>
-                            <option value="3 - Cute Jealousy">Level 3: Pouts cutely when attention wanders</option>
-                            <option value="4 - High Alert">Level 4: High security radar (FBI skills active)</option>
+                            <option value="Level 1: Unbothered">Level 1: Unbothered King/Queen (Trust-first)</option>
+                            <option value="Level 2: Healthy protection">Level 2: Healthy protective instincts</option>
+                            <option value="Level 3: Cute Jealousy">Level 3: Pouts cutely when attention wanders</option>
+                            <option value="Level 4: High Security Radar">Level 4: High security radar (FBI skills active)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label for="hangingOutSpontaneity">Plan Cancel / Flakiness Record <span class="req">*</span></label>
+                        <label for="flakinessRecord">Plan Cancel / Flakiness Record <span class="req">*</span></label>
                         <select id="flakinessRecord" class="form-control">
                             <option value="">-- SELECT TENDENCY --</option>
                             <option value="Punctual Always">100% Punctual & Always Shows Up</option>
@@ -1060,9 +1142,9 @@
                         <label for="foodSharing">Food Sharing / Bite Stealing Policy <span class="req">*</span></label>
                         <select id="foodSharing" class="form-control">
                             <option value="">-- SELECT POLICY --</option>
-                            <option value="What is mine is yours">Generous (What's mine is yours! Take a bite!)</option>
+                            <option value="Generous (Share everything)">Generous (What's mine is yours! Take a bite!)</option>
                             <option value="Ask first">Must ask politely before taking fries</option>
-                            <option value="Joey Doesn't Share">"JOEY DOESN'T SHARE FOOD!" (Order your own)</option>
+                            <option value="Joey Doesn't Share Food">"JOEY DOESN'T SHARE FOOD!" (Order your own)</option>
                             <option value="Feeds you first">Prefers feeding you before taking a bite</option>
                         </select>
                     </div>
@@ -1073,10 +1155,10 @@
                         <label for="shoppingPatience">Patience During Shopping / Outfit Fitting <span class="req">*</span></label>
                         <select id="shoppingPatience" class="form-control">
                             <option value="">-- SELECT PATIENCE LEVEL --</option>
-                            <option value="Infinite">Infinite (Carries bags & offers hype feedback)</option>
-                            <option value="Moderate">Good for 1-2 hours then needs coffee break</option>
-                            <option value="Sits on bench">Waits patiently on bench on phone</option>
-                            <option value="Low stamina">Stamina runs out in 20 minutes</option>
+                            <option value="Infinite Patience">Infinite (Carries bags & offers hype feedback)</option>
+                            <option value="Moderate (1-2 hrs)">Good for 1-2 hours then needs coffee break</option>
+                            <option value="Waits on bench">Waits patiently on bench on phone</option>
+                            <option value="Low stamina (20 mins)">Stamina runs out in 20 minutes</option>
                         </select>
                     </div>
 
@@ -1084,10 +1166,10 @@
                         <label for="hangryMeter">Hangry (Hungry + Angry) Index <span class="req">*</span></label>
                         <select id="hangryMeter" class="form-control">
                             <option value="">-- SELECT HANGRY RATING --</option>
-                            <option value="Low">Low (Stays calm and patient when hungry)</option>
-                            <option value="Moderate">Moderate (Gets quiet, needs food ASAP)</option>
-                            <option value="High">High (Dangerous zone: feed within 15 minutes)</option>
-                            <option value="Critical">Critical (Immediate emergency milk tea required)</option>
+                            <option value="Low Hangry Risk">Low (Stays calm and patient when hungry)</option>
+                            <option value="Moderate Hangry Risk">Moderate (Gets quiet, needs food ASAP)</option>
+                            <option value="High Hangry Risk">High (Dangerous zone: feed within 15 minutes)</option>
+                            <option value="Critical Hangry Emergency">Critical (Immediate emergency milk tea required)</option>
                         </select>
                     </div>
                 </div>
@@ -1107,6 +1189,50 @@
                     <button class="btn" id="nextBtnStep6">SUBMIT APPLICATION</button>
                 </div>
             </main>
+        </div>
+
+        <div id="step7View" class="hidden">
+            <div class="confirmation-box">
+                <div class="conf-header">
+                    <h2>OFFICIAL BOYFRIEND APPLICATION CLEARANCE</h2>
+                    <p style="font-size:0.8rem; color:#666; margin-top:4px;">REPUBLIC OF ATTRACTION • DEPARTMENT OF FOREIGN AFFAIRS & ATTACHMENTS</p>
+                </div>
+
+                <div class="pdf-grid">
+                    <div class="pdf-section-title">I. APPOINTMENT DETAILS</div>
+                    <div class="pdf-field"><strong>Venue / Site:</strong> <span id="pdfSite">--</span></div>
+                    <div class="pdf-field"><strong>Date & Time:</strong> <span id="pdfDateTime">--</span></div>
+
+                    <div class="pdf-section-title">II. CANDIDATE PROFILE</div>
+                    <div class="pdf-field"><strong>Full Name:</strong> <span id="pdfFullName">--</span></div>
+                    <div class="pdf-field"><strong>Civil Status:</strong> <span id="pdfCivilStatus">--</span></div>
+                    <div class="pdf-field"><strong>Occupation:</strong> <span id="pdfOccupation">--</span></div>
+                    <div class="pdf-field"><strong>Residence:</strong> <span id="pdfCity">--</span></div>
+                    <div class="pdf-field"><strong>Zodiac & MBTI:</strong> <span id="pdfZodiacMbti">--</span></div>
+                    <div class="pdf-field"><strong>Love Language:</strong> <span id="pdfLoveLanguage">--</span></div>
+
+                    <div class="pdf-section-title">III. EMOTIONAL & COMMUNICATION AUDIT</div>
+                    <div class="pdf-field"><strong>Conflict Style:</strong> <span id="pdfConflict">--</span></div>
+                    <div class="pdf-field"><strong>Texting Speed:</strong> <span id="pdfReply">--</span></div>
+                    <div class="pdf-field"><strong>Green Flag:</strong> <span id="pdfGreenFlag">--</span></div>
+                    <div class="pdf-field"><strong>2:00 AM Topic:</strong> <span id="pdfLateTopic">--</span></div>
+
+                    <div class="pdf-section-title">IV. RED FLAG & QUIRK DISCLOSURES</div>
+                    <div class="pdf-field"><strong>Ex Status:</strong> <span id="pdfEx">--</span></div>
+                    <div class="pdf-field"><strong>Jealousy Meter:</strong> <span id="pdfJealousy">--</span></div>
+                    <div class="pdf-field"><strong>Food Sharing Policy:</strong> <span id="pdfFood">--</span></div>
+                    <div class="pdf-field"><strong>Hangry Rating:</strong> <span id="pdfHangry">--</span></div>
+                    <div class="pdf-field" style="grid-column: span 2;"><strong>Harmless Guilty Pleasure:</strong> <span id="pdfGuilty">--</span></div>
+                </div>
+
+                <p style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 15px;">
+                    Verified & Stamp Approved by Department Consular Officers. Keep this copy for date reference.
+                </p>
+            </div>
+
+            <div class="button-group nav-buttons">
+                <button class="btn" id="exportPdfBtn">📄 DOWNLOAD / SAVE AS PDF</button>
+            </div>
         </div>
     </div>
 
@@ -1179,6 +1305,7 @@
         const step4View = document.getElementById('step4View');
         const step5View = document.getElementById('step5View');
         const step6View = document.getElementById('step6View');
+        const step7View = document.getElementById('step7View');
         const pageTitle = document.getElementById('pageTitle');
 
         // Step 2 Inputs
@@ -1251,6 +1378,9 @@
         const alertModal = document.getElementById('alertModal');
         const alertMessage = document.getElementById('alertMessage');
         const closeAlertModal = document.getElementById('closeAlertModal');
+
+        // PDF Export Elements
+        const exportPdfBtn = document.getElementById('exportPdfBtn');
 
         // Step 1 Enable/Disable
         consentCheckbox.addEventListener('change', () => {
@@ -1425,7 +1555,7 @@
             pageTitle.textContent = 'Individual Appointment - Communication Test';
         });
 
-        // Step 6 Final Submission Validation
+        // Step 6 Final Submission -> Step 7 PDF Summary View
         nextBtnStep6.addEventListener('click', () => {
             let errors = [];
 
@@ -1442,8 +1572,34 @@
                 alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
                 alertModal.style.display = 'flex';
             } else {
-                alert('Application Successfully Submitted! Your appointment, communication test, and Red Flag disclosures have been logged with Consular Officers.');
+                // Populate Confirmation PDF Fields
+                document.getElementById('pdfSite').textContent = siteInput.value;
+                document.getElementById('pdfDateTime').textContent = `${dateInput.value} @ ${timeInput.value}`;
+                document.getElementById('pdfFullName').textContent = `${givenName.value} ${lastName.value}`;
+                document.getElementById('pdfCivilStatus').textContent = civilStatus.value;
+                document.getElementById('pdfOccupation').textContent = occupation.value;
+                document.getElementById('pdfCity').textContent = city.value;
+                document.getElementById('pdfZodiacMbti').textContent = `${zodiac.value} | ${mbti.value}`;
+                document.getElementById('pdfLoveLanguage').textContent = loveLanguage.value;
+                document.getElementById('pdfConflict').textContent = conflictStyle.value;
+                document.getElementById('pdfReply').textContent = replySpeed.value;
+                document.getElementById('pdfGreenFlag').textContent = greenFlagPrompt.value;
+                document.getElementById('pdfLateTopic').textContent = lateNightTopic.value;
+                document.getElementById('pdfEx').textContent = exContact.value;
+                document.getElementById('pdfJealousy').textContent = jealousyLevel.value;
+                document.getElementById('pdfFood').textContent = foodSharing.value;
+                document.getElementById('pdfHangry').textContent = hangryMeter.value;
+                document.getElementById('pdfGuilty').textContent = guiltyPleasure.value;
+
+                step6View.classList.add('hidden');
+                step7View.classList.remove('hidden');
+                pageTitle.textContent = 'Application Clearance & Confirmation Summary';
             }
+        });
+
+        // Trigger PDF Save/Print
+        exportPdfBtn.addEventListener('click', () => {
+            window.print();
         });
     </script>
 
