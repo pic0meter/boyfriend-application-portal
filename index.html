@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department of Foreign Affairs & Applications</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #2b6cb0;
+            color: white;
+            padding: 15px 10%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #2b6cb0;
+            font-weight: bold;
+        }
+
+        .header-text h1 {
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-text h2 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .header-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            flex: 1;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            width: 90%;
+        }
+
+        .page-title {
+            font-size: 1.2rem;
+            color: #444;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar-menu {
+            list-style: none;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .sidebar-menu li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-menu li a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .sidebar-menu li.active a {
+            background-color: #3182ce;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Main Notice Area */
+        .welcome-text {
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .reminder-box {
+            border-left: 4px solid #e53e3e;
+            background-color: #fff5f5;
+            padding: 15px;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+        }
+
+        .reminder-box strong.title {
+            color: #e53e3e;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* Terms Section */
+        .terms-header {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .terms-text {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .consent-box {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            color: #c53030;
+            font-style: italic;
+            font-size: 0.78rem;
+            line-height: 1.4;
+            margin: 20px 0;
+        }
+
+        /* Action Buttons */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            background-color: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #2c5282;
+        }
+
+        .subtext-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #777;
+            margin-top: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #4a5568;
+            color: white;
+            padding: 25px 10%;
+            font-size: 0.75rem;
+            margin
