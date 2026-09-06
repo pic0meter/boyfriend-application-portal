@@ -709,14 +709,40 @@
                     </div>
                 </div>
 
-                <!-- Added Personal Details (No contact info/sensitive details) -->
-                <div class="grid-2">
+                <!-- Occupation, Address (City) & Zodiac -->
+                <div class="grid-3">
                     <div class="form-group">
                         <label for="occupation">Occupation / Profession <span class="req">*</span></label>
-                        <input type="text" id="occupation" class="form-control" placeholder="e.g. Software Engineer, Student, Designer">
+                        <input type="text" id="occupation" class="form-control" placeholder="e.g. Software Engineer, Student">
                     </div>
                     <div class="form-group">
-                        <label for="relationshipGoal">Primary Relationship Goal <span class="req">*</span></label>
+                        <label for="city">Current Residence (City) <span class="req">*</span></label>
+                        <input type="text" id="city" class="form-control" placeholder="e.g. Quezon City, Makati">
+                    </div>
+                    <div class="form-group">
+                        <label for="zodiac">Astrological / Zodiac Sign <span class="req">*</span></label>
+                        <select id="zodiac" class="form-control">
+                            <option value="">-- SELECT ZODIAC --</option>
+                            <option value="Aries">Aries (Mar 21 - Apr 19)</option>
+                            <option value="Taurus">Taurus (Apr 20 - May 20)</option>
+                            <option value="Gemini">Gemini (May 21 - Jun 20)</option>
+                            <option value="Cancer">Cancer (Jun 21 - Jul 22)</option>
+                            <option value="Leo">Leo (Jul 23 - Aug 22)</option>
+                            <option value="Virgo">Virgo (Aug 23 - Sep 22)</option>
+                            <option value="Libra">Libra (Sep 23 - Oct 22)</option>
+                            <option value="Scorpio">Scorpio (Oct 23 - Nov 21)</option>
+                            <option value="Sagittarius">Sagittarius (Nov 22 - Dec 21)</option>
+                            <option value="Capricorn">Capricorn (Dec 22 - Jan 19)</option>
+                            <option value="Aquarius">Aquarius (Jan 20 - Feb 18)</option>
+                            <option value="Pisces">Pisces (Feb 19 - Mar 20)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Relationship Details -->
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label for="relationshipGoal">Relationship Goal <span class="req">*</span></label>
                         <select id="relationshipGoal" class="form-control">
                             <option value="">-- SELECT GOAL --</option>
                             <option value="Long-term">Long-term Relationship</option>
@@ -725,11 +751,8 @@
                             <option value="Food Trip Buddy">Food Trip Buddy First</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="grid-2">
                     <div class="form-group">
-                        <label for="loveLanguage">Primary Love Language <span class="req">*</span></label>
+                        <label for="loveLanguage">Love Language <span class="req">*</span></label>
                         <select id="loveLanguage" class="form-control">
                             <option value="">-- SELECT LOVE LANGUAGE --</option>
                             <option value="Quality Time">Quality Time</option>
@@ -844,6 +867,8 @@
         const dob = document.getElementById('dob');
         const civilStatus = document.getElementById('civilStatus');
         const occupation = document.getElementById('occupation');
+        const city = document.getElementById('city');
+        const zodiac = document.getElementById('zodiac');
         const relationshipGoal = document.getElementById('relationshipGoal');
         const loveLanguage = document.getElementById('loveLanguage');
         const backBtnStep3 = document.getElementById('backBtnStep3');
@@ -943,8 +968,10 @@
             if (!dob.value) errors.push('Date of Birth');
             if (!civilStatus.value) errors.push('Civil Status');
             if (!occupation.value.trim()) errors.push('Occupation / Profession');
-            if (!relationshipGoal.value) errors.push('Primary Relationship Goal');
-            if (!loveLanguage.value) errors.push('Primary Love Language');
+            if (!city.value.trim()) errors.push('Current Residence (City)');
+            if (!zodiac.value) errors.push('Astrological / Zodiac Sign');
+            if (!relationshipGoal.value) errors.push('Relationship Goal');
+            if (!loveLanguage.value) errors.push('Love Language');
 
             if (errors.length > 0) {
                 alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
