@@ -377,80 +377,105 @@
             background-color: #4a5568;
         }
 
-        /* Modal Styles */
+        /* Modal Overlay & Box */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .modal-box {
             background: white;
             width: 90%;
-            max-width: 440px;
+            max-width: 480px;
             border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             border: 1px solid #ddd;
+            transform: translateY(-20px);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
         }
 
         .modal-header {
             background-color: #9f2b58;
             color: white;
-            padding: 12px 15px;
-            font-size: 0.9rem;
+            padding: 14px 20px;
+            font-size: 1rem;
             font-weight: bold;
-            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close-icon {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            line-height: 1;
         }
 
         .modal-body {
             padding: 20px;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: #333;
             line-height: 1.6;
-            text-align: center;
-        }
-
-        .modal-body p {
-            margin-bottom: 12px;
-        }
-
-        .highlight-text {
-            color: #c53030;
-            font-weight: bold;
-        }
-
-        .error-code {
-            color: #c53030;
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-            font-size: 0.9rem;
         }
 
         .modal-footer {
-            padding: 12px 15px;
+            padding: 12px 20px;
             background: #f9f9f9;
-            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
             border-top: 1px solid #eee;
         }
 
-        .modal-close-btn {
-            background-color: #9f2b58;
-            color: white;
-            border: none;
-            padding: 8px 18px;
-            font-size: 0.8rem;
+        .modal-btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
             border-radius: 3px;
             cursor: pointer;
             font-weight: bold;
+            border: none;
+        }
+
+        .modal-btn-primary {
+            background-color: #9f2b58;
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background-color: #7d2045;
+        }
+
+        .modal-btn-secondary {
+            background-color: #718096;
+            color: white;
+        }
+
+        .modal-btn-secondary:hover {
+            background-color: #4a5568;
         }
 
         /* Confirmation / Summary PDF View Styles */
@@ -634,7 +659,7 @@
             display: none !important;
         }
 
-        /* STRICT PRINT & EXPORT STYLES (CLEAN CLEARANCE ONLY) */
+        /* PRINT STYLES */
         @media print {
             @page {
                 margin: 0;
@@ -954,6 +979,7 @@
                             <option value="Long-term">Long-term Relationship</option>
                             <option value="Casual Dating">Casual Dating</option>
                             <option value="Marriage Minded">Marriage Minded</option>
+                            <option value="Friends">Friends</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -975,6 +1001,7 @@
                             <option value="5'2 - 5'6">5'2" - 5'6"</option>
                             <option value="5'7 - 5'11">5'7" - 5'11"</option>
                             <option value="6'0+">6'0"+</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
                         </select>
                     </div>
                 </div>
@@ -1192,7 +1219,7 @@
                         <select id="exContact" class="form-control">
                             <option value="">-- SELECT DISCLOSURE --</option>
                             <option value="Strictly Zero Contact">Strictly zero contact</option>
-                            <option value="Civil Friends">Civil  if we bump into each other</option>
+                            <option value="Civil Friends">Civil if we bump into each other</option>
                             <option value="Same Friend Group">In the same group, but purely platonic</option>
                             <option value="Still Friends">Still close friends</option>
                         </select>
@@ -1363,43 +1390,18 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="alertModal">
+    <!-- Reusable Dynamic Modal -->
+    <div class="modal-overlay" id="appModal">
         <div class="modal-box">
-            <div class="modal-header">APPLICATION INCOMPLETE</div>
-            <div class="modal-body">
-                <p id="alertMessage">Please complete all required fields before proceeding.</p>
-                <span class="error-code">Error Code: MISSING_DETAILS</span>
+            <div class="modal-header">
+                <span id="modalHeaderTitle">Notice</span>
+                <button class="modal-close-icon" id="modalCloseX">&times;</button>
             </div>
-            <div class="modal-footer">
-                <button class="modal-close-btn" id="closeAlertModal">OK</button>
+            <div class="modal-body" id="modalBodyText">
+                Please confirm your selection.
             </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="groupModal">
-        <div class="modal-box">
-            <div class="modal-header">SYSTEM ERROR: MULTI-APPLICATION RESTRICTION</div>
-            <div class="modal-body">
-                <p>The DFAA Dating Boyfriend Application System strictly enforces a <span class="highlight-text">STICK-TO-ONE POLICY</span>.</p>
-                <p>Group applications, roster building, and reserve benching are strictly prohibited under Republic Act 143. Please process a single application only.</p>
-                <span class="error-code">Error Code: THREE_IS_A_CROWD</span>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-close-btn" id="closeGroupModal">I UNDERSTAND</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="civilStatusModal">
-        <div class="modal-box">
-            <div class="modal-header">ELIGIBILITY ERROR: UNQUALIFIED STATUS</div>
-            <div class="modal-body">
-                <p>Nice try! But you <span class="highlight-text">MUST BE SINGLE</span> to apply for this position.</p>
-                <p>Taken, complicated, or emotionally unavailable candidates are automatically flagged by Department Security protocols. Resetting status to Single.</p>
-                <span class="error-code">Error Code: SINGLE_ONLY_POLICY</span>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-close-btn" id="closeCivilStatusModal">GOT IT!</button>
+            <div class="modal-footer" id="modalFooterBtns">
+                <button class="modal-btn modal-btn-primary" id="modalPrimaryBtn">OK</button>
             </div>
         </div>
     </div>
@@ -1425,6 +1427,8 @@
         </div>
         <div class="footer-bottom">
             <span>Copyright © Department of Foreign Affairs & Attachments | Office of Consular Affairs</span>
+            <br>
+            <span>Made in github by pic0meter</span>
             <span>1.4.3(2436269516.22) | Privacy Policy</span>
         </div>
     </footer>
@@ -1433,8 +1437,6 @@
         const consentCheckbox = document.getElementById('consent');
         const indivBtn = document.getElementById('indivBtn');
         const groupBtn = document.getElementById('groupBtn');
-        const groupModal = document.getElementById('groupModal');
-        const closeGroupModal = document.getElementById('closeGroupModal');
 
         const step1View = document.getElementById('step1View');
         const step2View = document.getElementById('step2View');
@@ -1444,6 +1446,37 @@
         const step6View = document.getElementById('step6View');
         const step7View = document.getElementById('step7View');
         const pageTitle = document.getElementById('pageTitle');
+
+        // Modal Elements & Handler
+        const appModal = document.getElementById('appModal');
+        const modalHeaderTitle = document.getElementById('modalHeaderTitle');
+        const modalBodyText = document.getElementById('modalBodyText');
+        const modalPrimaryBtn = document.getElementById('modalPrimaryBtn');
+        const modalCloseX = document.getElementById('modalCloseX');
+
+        function showModal(title, message, buttonText = "OK", onConfirm = null) {
+            modalHeaderTitle.textContent = title;
+            modalBodyText.innerHTML = message;
+            modalPrimaryBtn.textContent = buttonText;
+            appModal.classList.add('active');
+
+            const handleConfirm = () => {
+                closeModal();
+                if (onConfirm) onConfirm();
+                modalPrimaryBtn.removeEventListener('click', handleConfirm);
+            };
+
+            modalPrimaryBtn.onclick = handleConfirm;
+        }
+
+        function closeModal() {
+            appModal.classList.remove('active');
+        }
+
+        modalCloseX.addEventListener('click', closeModal);
+        window.addEventListener('click', (e) => {
+            if (e.target === appModal) closeModal();
+        });
 
         // Step 2 Inputs
         const siteInput = document.getElementById('siteInput');
@@ -1533,27 +1566,37 @@
             }
         });
 
-        // Alert Modal
-        const alertModal = document.getElementById('alertModal');
-        const alertMessage = document.getElementById('alertMessage');
-        const closeAlertModal = document.getElementById('closeAlertModal');
-
-        // Civil Status Enforcement Modal
-        const civilStatusModal = document.getElementById('civilStatusModal');
-        const closeCivilStatusModal = document.getElementById('closeCivilStatusModal');
-
+        // Civil Status Enforcement Check
         civilStatus.addEventListener('change', () => {
             if (civilStatus.value !== 'Single') {
-                civilStatusModal.style.display = 'flex';
-                civilStatus.value = 'Single';
+                showModal('ELIGIBILITY ERROR', '<p>Nice try! But you <strong style="color:#c53030;">MUST BE SINGLE</strong> to apply for this position.</p><p style="margin-top:8px;">Taken, complicated, or emotionally unavailable candidates are automatically flagged by Department Security protocols.</p>', 'RESET TO SINGLE', () => {
+                    civilStatus.value = 'Single';
+                });
             }
         });
 
-        closeCivilStatusModal.addEventListener('click', () => {
-            civilStatusModal.style.display = 'none';
+        // Pet Preference Trigger
+        petPreference.addEventListener('change', () => {
+            if (petPreference.value === 'No Pets') {
+                showModal('PET AUDIT ALERT', '<p>No pets? That\'s... <em>interesting</em>.</p><p style="margin-top:8px;">The Department has flagged your file for further anti-villain background checks. Who doesn\'t like pets?!</p>');
+            }
         });
 
-        // PDF Export Elements
+        // Relationship Goal Trigger
+        relationshipGoal.addEventListener('change', () => {
+            if (relationshipGoal.value === 'Friends') {
+                showModal('FRIENDZONE PROTOCOL ACTIVATED', '<p>Friends? On a <strong>dating application</strong> form?!</p><p style="margin-top:8px;">Bold move submitting an application to the Department of Foreign Affairs & Attachments just to stay in the friendzone. Filing under sub-category: <em>"Just A Bestie"</em>.</p>');
+            }
+        });
+
+        // Height Selection Trigger
+        height.addEventListener('change', () => {
+            if (height.value === 'Prefer not to say') {
+                showModal('MANDATORY SECURITY QUESTION', '<p>You selected "Prefer not to say" for your height.</p><p style="margin-top:8px;"><strong>MANDATORY QUESTION:</strong> Are you hiding your height because you are actually three kids stacked inside a trench coat, or do you just fear tape measures?</p>');
+            }
+        });
+
+        // Export PDF
         const exportPdfBtn = document.getElementById('exportPdfBtn');
 
         // Step 1 Enable/Disable
@@ -1563,23 +1606,11 @@
             groupBtn.disabled = !isChecked;
         });
 
-        // Group Modal Controls
+        // Group Appointment Restriction Modal
         groupBtn.addEventListener('click', () => {
-            if (!groupBtn.disabled) groupModal.style.display = 'flex';
-        });
-
-        closeGroupModal.addEventListener('click', () => {
-            groupModal.style.display = 'none';
-        });
-
-        closeAlertModal.addEventListener('click', () => {
-            alertModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === groupModal) groupModal.style.display = 'none';
-            if (e.target === alertModal) alertModal.style.display = 'none';
-            if (e.target === civilStatusModal) civilStatusModal.style.display = 'none';
+            if (!groupBtn.disabled) {
+                showModal('SYSTEM RESTRICTION', '<p>The DFAA Dating System strictly enforces a <strong style="color:#c53030;">STICK-TO-ONE POLICY</strong>.</p><p style="margin-top:8px;">Group applications and roster building are prohibited under Republic Act 143. Please process an individual application.</p>', 'I UNDERSTAND');
+            }
         });
 
         // Navigation: Step 1 -> Step 2
@@ -1609,8 +1640,7 @@
             if (!captchaCheck.checked) errors.push('reCAPTCHA Verification');
 
             if (errors.length > 0) {
-                alertMessage.innerHTML = `Please complete the following required items before proceeding:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
-                alertModal.style.display = 'flex';
+                showModal('INCOMPLETE APPLICATION', `Please complete the following required items before proceeding:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`);
             } else {
                 summarySite.textContent = siteInput.value;
                 summaryDate.textContent = dateInput.value;
@@ -1648,8 +1678,7 @@
             if (!loveLanguage.value) errors.push('Love Language');
 
             if (errors.length > 0) {
-                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
-                alertModal.style.display = 'flex';
+                showModal('INCOMPLETE DETAILS', `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`);
             } else {
                 summaryName.textContent = `${givenName.value} ${lastName.value}`;
                 summarySite2.textContent = siteInput.value;
@@ -1679,8 +1708,7 @@
             if (!growthArea.value.trim()) errors.push('Self-growth Area');
 
             if (errors.length > 0) {
-                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
-                alertModal.style.display = 'flex';
+                showModal('INCOMPLETE EVALUATION', `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`);
             } else {
                 summaryName2.textContent = `${givenName.value} ${lastName.value}`;
                 summaryDate2.textContent = dateInput.value;
@@ -1711,8 +1739,7 @@
             if (!idealFirstText.value.trim()) errors.push('Opening Test Text Message');
 
             if (errors.length > 0) {
-                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
-                alertModal.style.display = 'flex';
+                showModal('INCOMPLETE COMMUNICATION PROTOCOL', `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`);
             } else {
                 summaryName3.textContent = `${givenName.value} ${lastName.value}`;
 
@@ -1743,8 +1770,7 @@
             if (!confirmRedFlags.checked) errors.push('Red Flag Accuracy Certification');
 
             if (errors.length > 0) {
-                alertMessage.innerHTML = `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`;
-                alertModal.style.display = 'flex';
+                showModal('MISSING DISCLOSURES', `Please complete all required fields:<br><br><strong style="color:#c53030;">• ${errors.join('<br>• ')}</strong>`);
             } else {
                 const genderVal = document.querySelector('input[name="gender"]:checked')?.value || 'Not Specified';
                 const middleVal = middleName.value.trim() ? ` ${middleName.value.trim()}` : '';
@@ -1795,20 +1821,19 @@
                 document.getElementById('pdfHangry').textContent = hangryMeter.value;
                 document.getElementById('pdfGuilty').textContent = guiltyPleasure.value;
 
-                // Update Signature Line
+                // Signature
                 document.getElementById('sigApplicantName').textContent = fullNameStr.toUpperCase();
 
                 step6View.classList.add('hidden');
                 step7View.classList.remove('hidden');
-                pageTitle.style.display = 'none'; // Hide step header in summary view
+                pageTitle.style.display = 'none';
             }
         });
 
-        // Trigger PDF Save/Print
+        // Print/Save PDF Trigger
         exportPdfBtn.addEventListener('click', () => {
             window.print();
         });
     </script>
-
 </body>
 </html>
