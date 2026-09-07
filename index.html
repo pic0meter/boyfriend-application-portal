@@ -680,7 +680,7 @@
         <div class="header-text">
             <p>REPUBLIC OF ATTRACTION</p>
             <h2>DEPARTMENT OF FOREIGN AFFAIRS & ATTACHMENTS</h2>
-            <p>143 ROMANCE BOULEVARD, PASAY CITY, PHILIPPINES 1430</p>
+            <p>143 ROMANCE BOULEVARD, PHILIPPINES 1430</p>
         </div>
     </header>
 
@@ -697,7 +697,7 @@
 
             <main>
                 <p class="welcome-text">
-                    Welcome to the DFA Online Boyfriend Application System. Review all fields in the online form carefully and provide complete and accurate information.
+                    Welcome to the DFAA Online Dating Application System. Review all fields in the online form carefully and provide complete and accurate information.
                 </p>
 
                 <div class="reminder-box">
@@ -717,7 +717,7 @@
                     <div class="consent-box">
                         <input type="checkbox" id="consent">
                         <label for="consent">
-                            By proceeding with this application, I understand that I am signifying my unequivocal consent to the disclosure, collection, and processing of my personal info, favorite foods, red/green flags, and date availability under the specific terms and conditions of the DFA Online Boyfriend Appointment System.
+                            By proceeding with this application, I understand that I am signifying my unequivocal consent to the disclosure, collection, and processing of my personal info, favorite foods, red/green flags, and date availability under the specific terms and conditions of the DFAA Online Boyfriend Appointment System.
                         </label>
                     </div>
 
@@ -790,7 +790,7 @@
 
                 <div class="notice-footer-box">
                     <div class="notice-title">NOTICE:</div>
-                    <p>1. Appointments booked at any DFA Romantic Consular Office are non-transferable and subject to quality conversation standard guidelines.</p>
+                    <p>1. Appointments booked at any DFAA Romantic Consular Office are non-transferable and subject to quality conversation standard guidelines.</p>
                     <p>2. You only have <strong>30 minutes</strong> to complete the whole application process.</p>
                 </div>
 
@@ -860,8 +860,9 @@
                     <div class="form-group">
                         <label>Gender <span class="req">*</span></label>
                         <div class="radio-group">
-                            <label><input type="radio" name="gender" value="Male"> Male</label>
-                            <label><input type="radio" name="gender" value="Female"> Female</label>
+                            <label><input type="radio" name="gender" value="Man"> Man</label>
+                            <label><input type="radio" name="gender" value="Woman"> Woman</label>
+                            <label><input type="radio" name="gender" value="Nonbinary"> Nonbinary</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -871,11 +872,10 @@
                     <div class="form-group">
                         <label for="civilStatus">Civil Status <span class="req">*</span></label>
                         <select id="civilStatus" class="form-control">
-                            <option value="">-- SELECT CIVIL STATUS --</option>
-                            <option value="Single">Single (Ready to mingle)</option>
-                            <option value="Its Complicated">It's Complicated</option>
-                            <option value="Moving On">Moving On</option>
-                            <option value="Talking Stage">Talking Stage Professional</option>
+                            <option value="Single" selected>Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Divorced">Divorced</option>
+                            <option value="Widowed">Widowed</option>
                         </select>
                     </div>
                 </div>
@@ -930,7 +930,7 @@
                             <option value="ISFP">ISFP - Adventurer</option>
                             <option value="ESTP">ESTP - Entrepreneur</option>
                             <option value="ESFP">ESFP - Entertainer</option>
-                            <option value="Unknown">Not sure / Still discovering</option>
+                            <option value="Unknown">Not sure</option>
                         </select>
                     </div>
 
@@ -940,7 +940,7 @@
                             <option value="">-- SELECT PET PREFERENCE --</option>
                             <option value="Dog Person">🐶 Dog Person</option>
                             <option value="Cat Person">🐱 Cat Person</option>
-                            <option value="Both">🐾 Both</option>
+                            <option value="Others">🐾 Others</option>
                             <option value="No Pets">🚫 No Pets</option>
                         </select>
                     </div>
@@ -1395,6 +1395,20 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="civilStatusModal">
+        <div class="modal-box">
+            <div class="modal-header">ELIGIBILITY ERROR: UNQUALIFIED STATUS</div>
+            <div class="modal-body">
+                <p>Nice try! But you <span class="highlight-text">MUST BE SINGLE</span> to apply for this position.</p>
+                <p>Taken, complicated, or emotionally unavailable candidates are automatically flagged by Department Security protocols. Resetting status to Single.</p>
+                <span class="error-code">Error Code: SINGLE_ONLY_POLICY</span>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close-btn" id="closeCivilStatusModal">GOT IT!</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-grid">
             <div>
@@ -1529,6 +1543,21 @@
         const alertMessage = document.getElementById('alertMessage');
         const closeAlertModal = document.getElementById('closeAlertModal');
 
+        // Civil Status Enforcement Modal
+        const civilStatusModal = document.getElementById('civilStatusModal');
+        const closeCivilStatusModal = document.getElementById('closeCivilStatusModal');
+
+        civilStatus.addEventListener('change', () => {
+            if (civilStatus.value !== 'Single') {
+                civilStatusModal.style.display = 'flex';
+                civilStatus.value = 'Single';
+            }
+        });
+
+        closeCivilStatusModal.addEventListener('click', () => {
+            civilStatusModal.style.display = 'none';
+        });
+
         // PDF Export Elements
         const exportPdfBtn = document.getElementById('exportPdfBtn');
 
@@ -1555,6 +1584,7 @@
         window.addEventListener('click', (e) => {
             if (e.target === groupModal) groupModal.style.display = 'none';
             if (e.target === alertModal) alertModal.style.display = 'none';
+            if (e.target === civilStatusModal) civilStatusModal.style.display = 'none';
         });
 
         // Navigation: Step 1 -> Step 2
