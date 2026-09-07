@@ -699,6 +699,7 @@
     </style>
 </head>
 <body>
+    <audio id="bgMusic" src="audio.mp3" loop></audio>
 
     <header>
         <div class="logo-placeholder">❤️</div>
@@ -1447,6 +1448,8 @@
         const step7View = document.getElementById('step7View');
         const pageTitle = document.getElementById('pageTitle');
 
+        const bgMusic = document.getElementById('bgMusic');
+
         // Modal Elements & Handler
         const appModal = document.getElementById('appModal');
         const modalHeaderTitle = document.getElementById('modalHeaderTitle');
@@ -1585,7 +1588,7 @@
         // Relationship Goal Trigger
         relationshipGoal.addEventListener('change', () => {
             if (relationshipGoal.value === 'Friends') {
-                showModal('FRIENDZONE PROTOCOL ACTIVATED', '<p>Friends? On a <strong>dating application</strong> form?!</p><p style="margin-top:8px;">Are you sure you're on the right page?</p>');
+                showModal('FRIENDZONE PROTOCOL ACTIVATED', '<p>Friends? On a <strong>dating application</strong> form?!</p><p style="margin-top:8px;">Are you sure you\'re on the right page?</p>');
             }
         });
 
@@ -1616,6 +1619,9 @@
         // Navigation: Step 1 -> Step 2
         indivBtn.addEventListener('click', () => {
             if (!indivBtn.disabled) {
+                // Play audio on first user interaction 
+                bgMusic.play().catch(e => console.warn('Audio file not found or autoplay blocked.', e));
+                
                 step1View.classList.add('hidden');
                 step2View.classList.remove('hidden');
                 pageTitle.textContent = 'Individual Appointment - Site Location';
@@ -1830,9 +1836,13 @@
             }
         });
 
-        // Print/Save PDF Trigger
+        // Print/Save PDF Trigger with Mandatory Photo Check
         exportPdfBtn.addEventListener('click', () => {
-            window.print();
+            if (!photoInput.files || photoInput.files.length === 0) {
+                showModal('PHOTO REQUIRED', '<p>You must upload a 2x2 photo before saving or printing the clearance document.</p><p style="margin-top:8px;">Please click the photo box in the top right of the form to attach your image.</p>');
+            } else {
+                window.print();
+            }
         });
     </script>
 </body>
