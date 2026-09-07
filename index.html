@@ -869,12 +869,13 @@
                         <input type="date" id="dob" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="civilStatus">Dating Preferences <span class="req">*</span></label>
+                        <label for="civilStatus">Civil Status <span class="req">*</span></label>
                         <select id="civilStatus" class="form-control">
-                            <option value="">-- SELECT DATING PREFERENCES --</option>
-                            <option value="Casual">Casual</option>
-                            <option value="Long-Term Relationship">Long-Term Relationship</option>
-                            <option value="Friendship">Friendship</option>
+                            <option value="">-- SELECT CIVIL STATUS --</option>
+                            <option value="Single">Single (Ready to mingle)</option>
+                            <option value="Its Complicated">It's Complicated</option>
+                            <option value="Moving On">Moving On</option>
+                            <option value="Talking Stage">Talking Stage Professional</option>
                         </select>
                     </div>
                 </div>
@@ -929,23 +930,33 @@
                             <option value="ISFP">ISFP - Adventurer</option>
                             <option value="ESTP">ESTP - Entrepreneur</option>
                             <option value="ESFP">ESFP - Entertainer</option>
-                            <option value="Unknown">Not sure</option>
+                            <option value="Unknown">Not sure / Still discovering</option>
                         </select>
                     </div>
 
-                <div class="grid-3">
                     <div class="form-group">
-                        <label>Pet Preference<span class="req">*</span></label>
-                        <select id="pet" class="form-control">
+                        <label for="petPreference">Pet Preference / Lover <span class="req">*</span></label>
+                        <select id="petPreference" class="form-control">
                             <option value="">-- SELECT PET PREFERENCE --</option>
-                            <option value="Dog Person">Dog Person</option>
-                            <option value="Cat Person">Cat Person</option>
-                            <option value="Others">Others</option>
-                            <option value="No Pets">No Pets</option>
-                        </div>
+                            <option value="Dog Person">🐶 Dog Person</option>
+                            <option value="Cat Person">🐱 Cat Person</option>
+                            <option value="Both">🐾 Both</option>
+                            <option value="No Pets">🚫 No Pets</option>
+                        </select>
                     </div>
                 </div>
 
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label for="relationshipGoal">Relationship Goal <span class="req">*</span></label>
+                        <select id="relationshipGoal" class="form-control">
+                            <option value="">-- SELECT GOAL --</option>
+                            <option value="Long-term">Long-term Relationship</option>
+                            <option value="Casual Dating">Casual Dating</option>
+                            <option value="Marriage Minded">Marriage Minded</option>
+                            <option value="Food Trip Buddy">Food Trip Buddy First</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="loveLanguage">Love Language <span class="req">*</span></label>
                         <select id="loveLanguage" class="form-control">
@@ -964,7 +975,7 @@
                             <option value="Below 5'2">Below 5'2"</option>
                             <option value="5'2 - 5'6">5'2" - 5'6"</option>
                             <option value="5'7 - 5'11">5'7" - 5'11"</option>
-                            <option value="6'0+">6'0"+</option>
+                            <option value="6'0+">6'0"+ (Tall King/Queen)</option>
                         </select>
                     </div>
                 </div>
@@ -1444,6 +1455,7 @@
         const city = document.getElementById('city');
         const zodiac = document.getElementById('zodiac');
         const mbti = document.getElementById('mbti');
+        const petPreference = document.getElementById('petPreference');
         const relationshipGoal = document.getElementById('relationshipGoal');
         const loveLanguage = document.getElementById('loveLanguage');
         const height = document.getElementById('height');
@@ -1595,7 +1607,6 @@
         // Navigation: Step 3 Next -> Step 4
         nextBtnStep3.addEventListener('click', () => {
             const genderSelected = document.querySelector('input[name="gender"]:checked');
-            const petSelected = document.querySelector('input[name="petPreference"]:checked');
             let errors = [];
 
             if (!lastName.value.trim()) errors.push('Last Name');
@@ -1607,7 +1618,7 @@
             if (!city.value.trim()) errors.push('Current Residence (City)');
             if (!zodiac.value) errors.push('Astrological / Zodiac Sign');
             if (!mbti.value) errors.push('MBTI Personality Type');
-            if (!petSelected) errors.push('Pet Preference');
+            if (!petPreference.value) errors.push('Pet Preference');
             if (!relationshipGoal.value) errors.push('Relationship Goal');
             if (!loveLanguage.value) errors.push('Love Language');
 
@@ -1711,7 +1722,6 @@
                 alertModal.style.display = 'flex';
             } else {
                 const genderVal = document.querySelector('input[name="gender"]:checked')?.value || 'Not Specified';
-                const petVal = document.querySelector('input[name="petPreference"]:checked')?.value || 'Not Specified';
                 const middleVal = middleName.value.trim() ? ` ${middleName.value.trim()}` : '';
                 const fullNameStr = `${givenName.value}${middleVal} ${lastName.value}`;
 
@@ -1728,7 +1738,7 @@
                 document.getElementById('pdfCity').textContent = city.value;
                 document.getElementById('pdfZodiac').textContent = zodiac.value;
                 document.getElementById('pdfMbti').textContent = mbti.value;
-                document.getElementById('pdfPet').textContent = petVal;
+                document.getElementById('pdfPet').textContent = petPreference.value;
                 document.getElementById('pdfGoal').textContent = relationshipGoal.value;
                 document.getElementById('pdfLoveLanguage').textContent = loveLanguage.value;
                 document.getElementById('pdfHeight').textContent = height.value || 'N/A';
