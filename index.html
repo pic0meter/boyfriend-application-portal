@@ -42,6 +42,7 @@
             font-size: 20px;
             color: #9f2b58;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .header-text h1 {
@@ -167,11 +168,17 @@
             cursor: pointer;
         }
 
+        .consent-box input[type="checkbox"] {
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
         .button-group {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 25px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -184,6 +191,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             font-weight: bold;
             transition: all 0.2s ease;
@@ -288,6 +296,8 @@
             border-radius: 3px;
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .warning-box {
@@ -323,6 +333,7 @@
             border-radius: 3px;
             padding: 10px 15px;
             width: 300px;
+            max-width: 100%;
             margin: 15px 0;
             box-shadow: 0 0 4px rgba(0,0,0,0.05);
         }
@@ -392,6 +403,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.25s ease, visibility 0.25s ease;
+            padding: 15px;
         }
 
         .modal-overlay.active {
@@ -401,7 +413,7 @@
 
         .modal-box {
             background: white;
-            width: 90%;
+            width: 100%;
             max-width: 480px;
             border-radius: 4px;
             overflow: hidden;
@@ -494,6 +506,7 @@
             border-bottom: 2px solid #9f2b58;
             padding-bottom: 15px;
             margin-bottom: 20px;
+            gap: 15px;
         }
 
         .conf-title-container {
@@ -563,6 +576,7 @@
         .pdf-field {
             border-bottom: 1px solid #eee;
             padding-bottom: 5px;
+            word-break: break-word;
         }
 
         .pdf-field.full-width {
@@ -653,10 +667,104 @@
             display: flex;
             justify-content: space-between;
             color: #b87a93;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .hidden {
             display: none !important;
+        }
+
+        /* RESPONSIVE MOBILE STYLES */
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 15px 5%;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .header-text h1 {
+                font-size: 0.9rem;
+            }
+
+            .header-text h2 {
+                font-size: 1.1rem;
+            }
+
+            .header-text p {
+                font-size: 0.75rem;
+            }
+
+            .container {
+                width: 95%;
+                padding: 15px;
+                margin: 10px auto;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .grid-3, .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .button-group, .nav-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .form-control, select.form-control {
+                font-size: 16px; /* Prevents auto-zoom on iOS */
+            }
+
+            .conf-header {
+                flex-direction: column-reverse;
+                align-items: center;
+                text-align: center;
+            }
+
+            .conf-title-container {
+                text-align: center;
+            }
+
+            .pdf-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pdf-section-title, .pdf-field.full-width {
+                grid-column: span 1;
+            }
+
+            .signature-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .signature-line {
+                margin-top: 25px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .confirmation-box {
+                padding: 15px;
+            }
         }
 
         /* PRINT STYLES */
@@ -694,6 +802,27 @@
 
             .photo-upload-box {
                 border: 1px solid #000 !important;
+            }
+
+            .pdf-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .pdf-section-title, .pdf-field.full-width {
+                grid-column: span 2 !important;
+            }
+
+            .conf-header {
+                flex-direction: row !important;
+                text-align: left !important;
+            }
+
+            .conf-title-container {
+                text-align: left !important;
+            }
+
+            .signature-grid {
+                grid-template-columns: 1fr 1fr !important;
             }
         }
     </style>
