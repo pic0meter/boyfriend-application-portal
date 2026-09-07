@@ -249,11 +249,6 @@
             border-color: #9f2b58;
         }
 
-        .form-control:disabled {
-            background-color: #f0f0f0;
-            color: #666;
-        }
-
         .grid-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -458,10 +453,6 @@
             font-weight: bold;
         }
 
-        .modal-close-btn:hover {
-            background-color: #7d2045;
-        }
-
         /* Confirmation / Summary PDF View Styles */
         .confirmation-box {
             border: 2px dashed #9f2b58;
@@ -643,36 +634,41 @@
             display: none !important;
         }
 
-        /* PRINT / EXPORT PDF STYLES */
+        /* STRICT PRINT & EXPORT STYLES (CLEAN CLEARANCE ONLY) */
         @media print {
-            body {
-                background-color: white;
-                color: black;
+            @page {
+                margin: 0;
+                size: auto;
             }
 
-            header, footer, aside, .nav-buttons, .subtext-note, .warning-box, .notice-footer-box, .summary-banner, .modal-overlay, .photo-upload-box span {
+            body {
+                background-color: white !important;
+                color: black !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            header, footer, aside, .page-title, .nav-buttons, .subtext-note, .warning-box, .notice-footer-box, .summary-banner, .modal-overlay, .photo-upload-box .photo-placeholder-text {
                 display: none !important;
             }
 
             .container {
-                box-shadow: none;
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .content-grid {
-                display: block;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 15px !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
 
             .confirmation-box {
-                border: 2px solid #9f2b58;
-                background: white;
+                border: 2px solid #9f2b58 !important;
+                background: white !important;
+                margin-bottom: 0 !important;
+                padding: 20px !important;
             }
 
             .photo-upload-box {
-                border: 1px solid #000;
+                border: 1px solid #000 !important;
             }
         }
     </style>
@@ -716,9 +712,6 @@
                     </p>
                     <p class="terms-text">
                         Users accept the responsibility for supplying, checking, and verifying the accuracy and correctness of the information they provide on this system in connection with their application. Incorrect or inaccurate information supplied may result in instant disqualification.
-                    </p>
-                    <p class="terms-text">
-                        <strong>For Applicants utilizing the Premium Dating System:</strong> All emotional investments are non-refundable. Fees/Efforts shall be forfeited for applicants who fail to show up on their confirmed date, applicants who cancel unexpectedly, or applicants who present discrepant intention profiles.
                     </p>
 
                     <div class="consent-box">
@@ -845,7 +838,7 @@
                 </div>
 
                 <div class="warning-box">
-                    <strong>WARNING:</strong> Ensure that all details in the name (last name, given name) and personal details are accurate. Misrepresentations may result in instantaneous rejection or immediate ghosting.
+                    <strong>WARNING:</strong> Ensure that all details in the name and personal details are accurate. Misrepresentations may result in instantaneous rejection or immediate ghosting.
                 </div>
 
                 <div class="grid-3">
@@ -1153,8 +1146,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="goToMeme">What is your ultimate go-to comfort meme or GIF topic? <span class="req">*</span></label>
-                    <input type="text" id="goToMeme" class="form-control" placeholder="e.g. Cat playing piano, confused lady, viral TikTok audio">
+                    <label for="pickupLine">Give me your best pick-up line: <span class="req">*</span></label>
+                    <input type="text" id="pickupLine" class="form-control" placeholder="e.g. Are you a magician? Because whenever I look at you, everyone else disappears.">
                 </div>
 
                 <div class="form-group">
@@ -1332,7 +1325,7 @@
                     <div class="pdf-field"><strong>Late Reply Protocol:</strong> <span id="pdfLateProtocol">--</span></div>
                     <div class="pdf-field"><strong>Voice Notes Stance:</strong> <span id="pdfVoiceNote">--</span></div>
                     <div class="pdf-field"><strong>Humor / Banter Style:</strong> <span id="pdfHumor">--</span></div>
-                    <div class="pdf-field full-width"><strong>Go-To Meme / GIF:</strong> <span id="pdfMeme">--</span></div>
+                    <div class="pdf-field full-width"><strong>Best Pick-Up Line:</strong> <span id="pdfPickupLine">--</span></div>
                     <div class="pdf-field full-width"><strong>2:00 AM Conversation Topic:</strong> <span id="pdfLateTopic">--</span></div>
                     <div class="pdf-field full-width"><strong>Opening Test Message:</strong> <span id="pdfFirstText">--</span></div>
 
@@ -1376,9 +1369,7 @@
 
     <div class="modal-overlay" id="alertModal">
         <div class="modal-box">
-            <div class="modal-header">
-                APPLICATION INCOMPLETE
-            </div>
+            <div class="modal-header">APPLICATION INCOMPLETE</div>
             <div class="modal-body">
                 <p id="alertMessage">Please complete all required fields before proceeding.</p>
                 <span class="error-code">Error Code: MISSING_DETAILS</span>
@@ -1391,9 +1382,7 @@
 
     <div class="modal-overlay" id="groupModal">
         <div class="modal-box">
-            <div class="modal-header">
-                SYSTEM ERROR: MULTI-APPLICATION RESTRICTION
-            </div>
+            <div class="modal-header">SYSTEM ERROR: MULTI-APPLICATION RESTRICTION</div>
             <div class="modal-body">
                 <p>The DFA Online Boyfriend Application System strictly enforces a <span class="highlight-text">STICK-TO-ONE POLICY</span>.</p>
                 <p>Group applications, roster building, and reserve benching are strictly prohibited under Republic Act 143. Please process a single application only.</p>
@@ -1487,7 +1476,7 @@
         const lateReplyProtocol = document.getElementById('lateReplyProtocol');
         const voiceNoteStance = document.getElementById('voiceNoteStance');
         const humorStyle = document.getElementById('humorStyle');
-        const goToMeme = document.getElementById('goToMeme');
+        const pickupLine = document.getElementById('pickupLine');
         const lateNightTopic = document.getElementById('lateNightTopic');
         const idealFirstText = document.getElementById('idealFirstText');
         const backBtnStep5 = document.getElementById('backBtnStep5');
@@ -1691,7 +1680,7 @@
             if (!lateReplyProtocol.value) errors.push('Late Reply Protocol');
             if (!voiceNoteStance.value) errors.push('Stance on Voice Notes');
             if (!humorStyle.value) errors.push('Primary Humor / Banter Style');
-            if (!goToMeme.value.trim()) errors.push('Go-to Meme / GIF Topic');
+            if (!pickupLine.value.trim()) errors.push('Best Pick-Up Line');
             if (!lateNightTopic.value.trim()) errors.push('2:00 AM Conversation Topic');
             if (!idealFirstText.value.trim()) errors.push('Opening Test Text Message');
 
@@ -1768,7 +1757,7 @@
                 document.getElementById('pdfLateProtocol').textContent = lateReplyProtocol.value;
                 document.getElementById('pdfVoiceNote').textContent = voiceNoteStance.value;
                 document.getElementById('pdfHumor').textContent = humorStyle.value;
-                document.getElementById('pdfMeme').textContent = goToMeme.value;
+                document.getElementById('pdfPickupLine').textContent = pickupLine.value;
                 document.getElementById('pdfLateTopic').textContent = lateNightTopic.value;
                 document.getElementById('pdfFirstText').textContent = idealFirstText.value;
 
@@ -1781,12 +1770,12 @@
                 document.getElementById('pdfHangry').textContent = hangryMeter.value;
                 document.getElementById('pdfGuilty').textContent = guiltyPleasure.value;
 
-                // Update Signature Line with Full Name
+                // Update Signature Line
                 document.getElementById('sigApplicantName').textContent = fullNameStr.toUpperCase();
 
                 step6View.classList.add('hidden');
                 step7View.classList.remove('hidden');
-                pageTitle.textContent = 'Application Clearance & Confirmation Summary';
+                pageTitle.style.display = 'none'; // Hide step header in summary view
             }
         });
 
