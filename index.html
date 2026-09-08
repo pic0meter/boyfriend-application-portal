@@ -495,6 +495,58 @@
             background-color: #4a5568;
         }
 
+        /* Loading Spinner Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            color: white;
+            text-align: center;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 255, 255, 0.2);
+            border-top: 6px solid #9f2b58;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .loading-subtext {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
         /* Confirmation / Summary PDF View Styles */
         .confirmation-box {
             border: 2px dashed #9f2b58;
@@ -1482,6 +1534,13 @@
         </div>
     </div>
 
+    <!-- Generating PDF Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">GENERATING PDF & SHAREABLE LINK...</div>
+        <div class="loading-subtext">Please wait while we assemble your clearance document.</div>
+    </div>
+
     <footer>
         <div class="footer-grid">
             <div>
@@ -1531,6 +1590,7 @@
         const modalBodyText = document.getElementById('modalBodyText');
         const modalPrimaryBtn = document.getElementById('modalPrimaryBtn');
         const modalCloseX = document.getElementById('modalCloseX');
+        const loadingOverlay = document.getElementById('loadingOverlay');
 
         function showModal(title, message, buttonText = "OK", onConfirm = null) {
             modalHeaderTitle.textContent = title;
@@ -1919,23 +1979,48 @@
             const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyNF6_oCtXklW58GihWlQwiki9dpz_aI04pHsJhjqZindRcbY5JYbeHD5YMmrv4mGv_/exec";
 
             exportPdfBtn.disabled = true;
-            exportPdfBtn.textContent = "⏳ GENERATING PDF & LINK...";
+            loadingOverlay.classList.add('active');
 
             try {
                 const element = document.querySelector('.confirmation-box');
                 
-                const canvas = await html2canvas(element, { scale: 2 });
+                // Capture canvas at high resolution
+                const canvas = await html2canvas(element, { scale: 2, useCORS: true });
                 const imgData = canvas.toDataURL('image/png');
 
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4');
-                const imgProps = pdf.getImageProperties(imgData);
                 const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                const pdfPageHeight = pdf.internal.pageSize.getHeight();
 
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                const imgWidth = canvas.width;
+                const imgHeight = canvas.height;
+
+                // Calculate image dimensions scaled to PDF width
+                const renderedImgHeight = (imgHeight * pdfWidth) / imgWidth;
                 
+                let heightLeft = renderedImgHeight;
+                let position = 0;
+
+                // Add full multi-page content support so Oath & Signatures are captured completely
+                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, renderedImgHeight);
+                heightLeft -= pdfPageHeight;
+
+                while (heightLeft > 0) {
+                    position = heightLeft - renderedImgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, renderedImgHeight);
+                    heightLeft -= pdfPageHeight;
+                }
+
+                // Generate Base64 String and Blob for direct tab opening
                 const base64PDF = pdf.output('datauristring').split(',')[1];
+                const pdfBlob = pdf.output('blob');
+                const blobUrl = URL.createObjectURL(pdfBlob);
+
+                // Open generated PDF in new tab
+                window.open(blobUrl, '_blank');
+
                 const applicantName = (givenName.value + "_" + lastName.value).replace(/\s+/g, '_');
 
                 const response = await fetch(WEB_APP_URL, {
@@ -1951,7 +2036,7 @@
                 if (result.status === "success") {
                     showModal(
                         'APPLICATION LINK READY',
-                        `<p>Your clearance application has been uploaded successfully!</p>
+                        `<p>Your clearance application has been generated and opened in a new tab!</p>
                          <p style="margin-top:10px;"><strong>Shareable Link:</strong></p>
                          <input type="text" value="${result.url}" readonly id="shareLinkInput" style="width:100%; padding:8px; margin-top:5px; font-size:0.8rem; border:1px solid #ccc; border-radius:3px;">`,
                         'COPY LINK',
@@ -1969,8 +2054,8 @@
                 console.error(error);
                 showModal('UPLOAD FAILED', '<p>There was an error generating or uploading your PDF. Please try again.</p>');
             } finally {
+                loadingOverlay.classList.remove('active');
                 exportPdfBtn.disabled = false;
-                exportPdfBtn.textContent = "🔗 GENERATE & SHARE LINK";
             }
         });
     </script>
