@@ -1967,7 +1967,7 @@
             }
         });
 
-        // PDF Generation and Automatic Cloud Upload Trigger
+        // PDF Generation and Automatic Cloud Upload Trigger (OPTION 1: DYNAMIC SINGLE PAGE FIT)
         const exportPdfBtn = document.getElementById('exportPdfBtn');
 
         exportPdfBtn.addEventListener('click', async () => {
@@ -1984,41 +1984,26 @@
             try {
                 const element = document.querySelector('.confirmation-box');
                 
-                // Capture canvas at high resolution
+                // Capture high-resolution canvas screenshot
                 const canvas = await html2canvas(element, { scale: 2, useCORS: true });
                 const imgData = canvas.toDataURL('image/png');
 
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfPageHeight = pdf.internal.pageSize.getHeight();
 
-                const imgWidth = canvas.width;
-                const imgHeight = canvas.height;
+                // Calculate dynamic height to fit content entirely on 1 continuous page
+                const pdfWidth = 210; // Standard A4 width in mm
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-                // Calculate image dimensions scaled to PDF width
-                const renderedImgHeight = (imgHeight * pdfWidth) / imgWidth;
-                
-                let heightLeft = renderedImgHeight;
-                let position = 0;
-
-                // Add full multi-page content support so Oath & Signatures are captured completely
-                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, renderedImgHeight);
-                heightLeft -= pdfPageHeight;
-
-                while (heightLeft > 0) {
-                    position = heightLeft - renderedImgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, renderedImgHeight);
-                    heightLeft -= pdfPageHeight;
-                }
+                // Instantiate PDF with exact custom dimensions matching the entire form height
+                const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
                 // Generate Base64 String and Blob for direct tab opening
                 const base64PDF = pdf.output('datauristring').split(',')[1];
                 const pdfBlob = pdf.output('blob');
                 const blobUrl = URL.createObjectURL(pdfBlob);
 
-                // Open generated PDF in new tab
+                // Open generated single-page PDF in new tab
                 window.open(blobUrl, '_blank');
 
                 const applicantName = (givenName.value + "_" + lastName.value).replace(/\s+/g, '_');
