@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Department of Foreign Affairs & Attachments</title>
+    
+    <!-- Libraries for capturing DOM and converting to PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -721,7 +726,7 @@
             }
 
             .form-control, select.form-control {
-                font-size: 16px; /* Prevents auto-zoom on iOS */
+                font-size: 16px;
             }
 
             .conf-header {
@@ -764,65 +769,6 @@
 
             .confirmation-box {
                 padding: 15px;
-            }
-        }
-
-        /* PRINT STYLES */
-        @media print {
-            @page {
-                margin: 0;
-                size: auto;
-            }
-
-            body {
-                background-color: white !important;
-                color: black !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-
-            header, footer, aside, .page-title, .nav-buttons, .subtext-note, .warning-box, .notice-footer-box, .summary-banner, .modal-overlay, .photo-upload-box .photo-placeholder-text {
-                display: none !important;
-            }
-
-            .container {
-                box-shadow: none !important;
-                margin: 0 !important;
-                padding: 15px !important;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .confirmation-box {
-                border: 2px solid #9f2b58 !important;
-                background: white !important;
-                margin-bottom: 0 !important;
-                padding: 20px !important;
-            }
-
-            .photo-upload-box {
-                border: 1px solid #000 !important;
-            }
-
-            .pdf-grid {
-                grid-template-columns: 1fr 1fr !important;
-            }
-
-            .pdf-section-title, .pdf-field.full-width {
-                grid-column: span 2 !important;
-            }
-
-            .conf-header {
-                flex-direction: row !important;
-                text-align: left !important;
-            }
-
-            .conf-title-container {
-                text-align: left !important;
-            }
-
-            .signature-grid {
-                grid-template-columns: 1fr 1fr !important;
             }
         }
     </style>
@@ -1515,7 +1461,7 @@
             </div>
 
             <div class="button-group nav-buttons">
-                <button class="btn" id="exportPdfBtn">📄 DOWNLOAD / SAVE AS PDF</button>
+                <button class="btn" id="exportPdfBtn">🔗 GENERATE & SHARE LINK</button>
             </div>
         </div>
     </div>
@@ -1728,9 +1674,6 @@
             }
         });
 
-        // Export PDF
-        const exportPdfBtn = document.getElementById('exportPdfBtn');
-
         // Step 1 Enable/Disable
         consentCheckbox.addEventListener('change', () => {
             const isChecked = consentCheckbox.checked;
@@ -1748,7 +1691,6 @@
         // Navigation: Step 1 -> Step 2
         indivBtn.addEventListener('click', () => {
             if (!indivBtn.disabled) {
-                // Play audio on first user interaction 
                 bgMusic.play().catch(e => console.warn('Audio file not found or autoplay blocked.', e));
                 
                 step1View.classList.add('hidden');
@@ -1965,12 +1907,70 @@
             }
         });
 
-        // Print/Save PDF Trigger with Mandatory Photo Check
-        exportPdfBtn.addEventListener('click', () => {
+        // PDF Generation and Automatic Cloud Upload Trigger
+        const exportPdfBtn = document.getElementById('exportPdfBtn');
+
+        exportPdfBtn.addEventListener('click', async () => {
             if (!photoInput.files || photoInput.files.length === 0) {
-                showModal('PHOTO REQUIRED', '<p>You must upload a 2x2 photo before saving or printing the clearance document.</p><p style="margin-top:8px;">Please click the photo box in the top right of the form to attach your image.</p>');
-            } else {
-                window.print();
+                showModal('PHOTO REQUIRED', '<p>You must upload a 2x2 photo before generating your shareable link.</p><p style="margin-top:8px;">Please click the photo box in the top right of the form to attach your image.</p>');
+                return;
+            }
+
+            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyNF6_oCtXklW58GihWlQwiki9dpz_aI04pHsJhjqZindRcbY5JYbeHD5YMmrv4mGv_/exec";
+
+            exportPdfBtn.disabled = true;
+            exportPdfBtn.textContent = "⏳ GENERATING PDF & LINK...";
+
+            try {
+                const element = document.querySelector('.confirmation-box');
+                
+                const canvas = await html2canvas(element, { scale: 2 });
+                const imgData = canvas.toDataURL('image/png');
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                
+                const base64PDF = pdf.output('datauristring').split(',')[1];
+                const applicantName = (givenName.value + "_" + lastName.value).replace(/\s+/g, '_');
+
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        base64: base64PDF,
+                        filename: `DFAA_Clearance_${applicantName}.pdf`
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    showModal(
+                        'APPLICATION LINK READY',
+                        `<p>Your clearance application has been uploaded successfully!</p>
+                         <p style="margin-top:10px;"><strong>Shareable Link:</strong></p>
+                         <input type="text" value="${result.url}" readonly id="shareLinkInput" style="width:100%; padding:8px; margin-top:5px; font-size:0.8rem; border:1px solid #ccc; border-radius:3px;">`,
+                        'COPY LINK',
+                        () => {
+                            const linkInput = document.getElementById('shareLinkInput');
+                            navigator.clipboard.writeText(result.url);
+                            alert("Link copied to clipboard!");
+                        }
+                    );
+                } else {
+                    throw new Error(result.message);
+                }
+
+            } catch (error) {
+                console.error(error);
+                showModal('UPLOAD FAILED', '<p>There was an error generating or uploading your PDF. Please try again.</p>');
+            } finally {
+                exportPdfBtn.disabled = false;
+                exportPdfBtn.textContent = "🔗 GENERATE & SHARE LINK";
             }
         });
     </script>
